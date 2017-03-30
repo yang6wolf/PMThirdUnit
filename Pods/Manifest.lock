@@ -1,0 +1,66 @@
+PODS:
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
+    - AFNetworking/NSURLSession
+  - Aspects (1.4.1)
+  - ECLaunch (0.1.0)
+  - JSONKit-NoWarning (1.2)
+  - KVOController (1.2.0)
+  - Mantle (2.0.7):
+    - Mantle/extobjc (= 2.0.7)
+  - Mantle/extobjc (2.0.7)
+  - MSWeakTimer (1.1.0)
+  - PBJVision (0.4.0)
+  - Reachability (3.2)
+  - ReactiveCocoa (2.4.7):
+    - ReactiveCocoa/UI (= 2.4.7)
+  - ReactiveCocoa/Core (2.4.7):
+    - ReactiveCocoa/no-arc
+  - ReactiveCocoa/no-arc (2.4.7)
+  - ReactiveCocoa/UI (2.4.7):
+    - ReactiveCocoa/Core
+  - Realm (2.5.0):
+    - Realm/Headers (= 2.5.0)
+  - Realm/Headers (2.5.0)
+
+DEPENDENCIES:
+  - AFNetworking (~> 3.0)
+  - Aspects (~> 1.4)
+  - ECLaunch (~> 0.1.0)
+  - JSONKit-NoWarning (~> 1.2)
+  - KVOController
+  - Mantle (= 2.0.7)
+  - MSWeakTimer (~> 1.1.0)
+  - PBJVision (= 0.4.0)
+  - Reachability (~> 3.2)
+  - ReactiveCocoa (~> 2.4.7)
+  - Realm
+
+SPEC CHECKSUMS:
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
+  ECLaunch: 6b6ccf0867db143bff059ed71d5a2ff0ea4dacae
+  JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
+  MSWeakTimer: 9426150f933b80ed3acf3f6d228e4b61f0e303c8
+  PBJVision: aa3d9f584324e099898fb83977a815f0ecb7ba5a
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
+  Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
+
+PODFILE CHECKSUM: 6812fa58caa695967c813b6535a864cf66da0a93
+
+COCOAPODS: 1.2.0

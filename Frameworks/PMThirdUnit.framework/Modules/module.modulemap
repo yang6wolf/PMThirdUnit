@@ -1,0 +1,6 @@
+framework module PMThirdUnit {
+  umbrella header "PMThirdUnit.h"
+
+  export *
+  module * { export * }
+}
