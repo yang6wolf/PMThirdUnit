@@ -7,8 +7,9 @@ Pod::Spec.new do |s|
   s.homepage     = "https://git.ms.netease.com/preciousmetals/PMThirdUnit"
   s.license      = { :type => 'MIT', :file => 'LICENSE'}
   s.author       = { "YangXP" => "bjyangxiaopeng1@corp.netease.com" }
-  s.source       = { :git => "https://git.ms.netease.com/preciousmetals/PMThirdUnit.git", :branch => "master"}
+  s.source       = { :git => "https://git.ms.netease.com/preciousmetals/PMThirdUnit.git", :branch => 'master'}
 
+  s.source_files = 'PMThirdUnit/PMThirdUnit.m'
   s.platform = :ios
   s.ios.deployment_target = '8.0'
 
