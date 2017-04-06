@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2057" systemVersion="11G63" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="FBSettings" representedClassName="FBSettings" syncable="YES">
+        <attribute name="lasUpdateTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="unread" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="FeedBackMessages" representedClassName="FeedBackMessages" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hasRead" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="imgUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isOut" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="msgid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ssn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="time" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="FBSettings" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="FeedBackMessages" positionX="160" positionY="192" width="128" height="180"/>
+    </elements>
+</model>

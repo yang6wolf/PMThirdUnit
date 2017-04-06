@@ -6,7 +6,9 @@
 //
 //
 
-@import UIKit;
+#import <UIKit/UIKit.h>;
+
+#import "UIWindow+ECLaunch.h"
 
 typedef NS_ENUM(NSInteger, ECLaunchStyle) {
     ECLaunchStyleStandard,

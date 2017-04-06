@@ -1,0 +1,1 @@
+../../../LDEventCollection/LDEventCollection/Helper/UIDevice+NLDEventCollection.h

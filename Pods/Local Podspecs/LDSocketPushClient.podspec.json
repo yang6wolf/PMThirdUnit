@@ -1,0 +1,38 @@
+{
+  "name": "LDSocketPushClient",
+  "version": "0.4.5",
+  "summary": "LDSocketPushClient.",
+  "description": "长连接推送平台客户端，采用TCP连接接受服务端消息，用以解决轮询获取消息不及时的问题。\n\n* Markdown format.\n* Don't worry about the indent, we strip it!",
+  "homepage": "https://git.ms.netease.com/commonlibraryios/LDSocketPushClient",
+  "license": "MIT",
+  "authors": {
+    "bingliu": "bingliu@corp.netease.com"
+  },
+  "source": {
+    "git": "https://git.ms.netease.com/commonlibraryios/LDSocketPushClient.git",
+    "tag": "0.4.5"
+  },
+  "platforms": {
+    "ios": "6.0"
+  },
+  "requires_arc": true,
+  "source_files": "Pod/Classes/**/*.{h,m,mm,cc}",
+  "public_header_files": "Pod/Classes/**/*.h",
+  "private_header_files": [
+    "Pod/Classes/Message.pb.h",
+    "Pod/Classes/GoogleProtobuf/**/*.h"
+  ],
+  "libraries": "c++",
+  "vendored_libraries": "Pod/Classes/GoogleProtobuf/libGoogleProtobuf.a",
+  "dependencies": {
+    "CocoaAsyncSocket": [
+      "~> 7.4.3"
+    ],
+    "MSWeakTimer": [
+      "~> 1.1.0"
+    ],
+    "Reachability": [
+
+    ]
+  }
+}

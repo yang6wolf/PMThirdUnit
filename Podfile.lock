@@ -15,14 +15,51 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Aspects (1.4.1)
+  - CocoaAsyncSocket (7.4.3):
+    - CocoaAsyncSocket/All (= 7.4.3)
+  - CocoaAsyncSocket/All (7.4.3):
+    - CocoaAsyncSocket/GCD
+    - CocoaAsyncSocket/RunLoop
+  - CocoaAsyncSocket/GCD (7.4.3)
+  - CocoaAsyncSocket/RunLoop (7.4.3)
+  - CPFoundationCategory (0.1.5):
+    - KeychainWrapper (~> 0.1.0)
   - ECLaunch (0.1.0)
+  - JLRoutes (1.5.5)
   - JSONKit-NoWarning (1.2)
+  - KeychainWrapper (0.1.2)
   - KVOController (1.2.0)
+  - LDEventCollection (0.2.10):
+    - LDPositioning (~> 0.1.1)
+    - ProtocolBuffers
+  - LDGeminiSDK (0.1.0)
+  - LDMediator (0.1.1)
+  - LDNetDiagnoService (1.2.5):
+    - Reachability
+  - LDPositioning (0.1.1)
+  - LDRemoteCommand (0.0.6):
+    - LDNetDiagnoService (~> 1.2.0)
+  - LDRoutes (0.0.3):
+    - JLRoutes (~> 1.5.1)
+  - LDSocketPushClient (0.4.5):
+    - CocoaAsyncSocket (~> 7.4.3)
+    - MSWeakTimer (~> 1.1.0)
+    - Reachability
+  - libqrencode (3.4.2)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
   - Mantle/extobjc (2.0.7)
+  - MKAdditions (0.1.1)
+  - MobileAnalysis (1.3.5):
+    - Aspects (~> 1.4)
+    - JSONKit-NoWarning (~> 1.2)
+    - Reachability
   - MSWeakTimer (1.1.0)
+  - NTFeedBack (3.2.4):
+    - AFNetworking (~> 3.1.0)
+    - LDNetDiagnoService
   - PBJVision (0.4.0)
+  - ProtocolBuffers (1.9.11)
   - Reachability (3.2)
   - ReactiveCocoa (2.4.7):
     - ReactiveCocoa/UI (= 2.4.7)
@@ -38,29 +75,71 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Aspects (~> 1.4)
+  - CocoaAsyncSocket (~> 7.4.3)
+  - CPFoundationCategory (~> 0.1.1)
   - ECLaunch (~> 0.1.0)
+  - JLRoutes (~> 1.5.5)
   - JSONKit-NoWarning (~> 1.2)
+  - KeychainWrapper (~> 0.1.1)
   - KVOController
+  - LDEventCollection (~> 0.2.3)
+  - LDGeminiSDK (~> 0.1.0)
+  - LDMediator (~> 0.1.0)
+  - LDNetDiagnoService (~> 1.2.5)
+  - LDRemoteCommand (~> 0.0.5)
+  - LDRoutes (~> 0.0.1)
+  - LDSocketPushClient (from `https://git.ms.netease.com/commonlibraryios/LDSocketPushClient.git`, branch `develop_gaoyu`)
+  - libqrencode
   - Mantle (= 2.0.7)
+  - MKAdditions (= 0.1.1)
+  - MobileAnalysis (~> 1.3.5)
   - MSWeakTimer (~> 1.1.0)
+  - NTFeedBack
   - PBJVision (= 0.4.0)
   - Reachability (~> 3.2)
   - ReactiveCocoa (~> 2.4.7)
   - Realm
 
+EXTERNAL SOURCES:
+  LDSocketPushClient:
+    :branch: develop_gaoyu
+    :git: https://git.ms.netease.com/commonlibraryios/LDSocketPushClient.git
+
+CHECKOUT OPTIONS:
+  LDSocketPushClient:
+    :commit: bf193bf6f328ad1f744f94e83be4a188a9d3061b
+    :git: https://git.ms.netease.com/commonlibraryios/LDSocketPushClient.git
+
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
+  CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
+  CPFoundationCategory: 747928c252cc678548f3f9a13d1d007377448834
   ECLaunch: 6b6ccf0867db143bff059ed71d5a2ff0ea4dacae
+  JLRoutes: d191a496b820f60d70225202d04289582da962df
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  KeychainWrapper: 2451abbc8ee4c8a0c7f13e4bf1c21879dc711794
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
+  LDEventCollection: c97f1c74d595b05e0c8d35382aa8cb3eac5a21f0
+  LDGeminiSDK: aa13cbad1cf5c4b0d13c981d662009bdfde6ae43
+  LDMediator: 7453ad0afdec638a59a057804af9c6b644263e5a
+  LDNetDiagnoService: 742f5c5df2023d8a46f30a3f7fa1df7401752aa1
+  LDPositioning: b01c068a257364c856c3b3e01e40e0d5e3642633
+  LDRemoteCommand: aef240066d110aeff451a0a4b021ab0f2e59b1b0
+  LDRoutes: 97066a1745d57d4a15032357cfe37d8df292dbc7
+  LDSocketPushClient: b607658700e5c95de5152fa5ce53cd8e8a48ca58
+  libqrencode: 43dc34b89af83ea4b07c409cd8e09c87aa3a1c9f
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
+  MKAdditions: 7c68a408ad6795e20eecd6920592002781e0ef61
+  MobileAnalysis: b0adf64d1912bff170ae60a8bec9ea10cc97c24b
   MSWeakTimer: 9426150f933b80ed3acf3f6d228e4b61f0e303c8
+  NTFeedBack: e3da9aa293060c27e5b25f8ea8647cd5927df396
   PBJVision: aa3d9f584324e099898fb83977a815f0ecb7ba5a
+  ProtocolBuffers: d509225eb2ea43d9582a59e94348fcf86e2abd65
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
 
-PODFILE CHECKSUM: 6812fa58caa695967c813b6535a864cf66da0a93
+PODFILE CHECKSUM: 97d5dc60aeb977a56a5743a5edb16c855d08eef9
 
 COCOAPODS: 1.2.0

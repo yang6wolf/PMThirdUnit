@@ -17,7 +17,7 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
-#import <Realm/RLMObject.h>
+#import "RLMObject.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

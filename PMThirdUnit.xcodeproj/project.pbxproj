@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B84BBFB1E8F9AFC00B24819 /* PMThirdUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */; };
 		2BBB96511E8CD86700BFBD7A /* PMThirdUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74E67458E435DF766DA8141B /* libPods-PMThirdUnit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B068CB4FBEB2E2E6EE9C14B7 /* libPods-PMThirdUnit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMThirdUnit.m; sourceTree = "<group>"; };
 		2BBB964C1E8CD86700BFBD7A /* PMThirdUnit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PMThirdUnit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMThirdUnit.h; sourceTree = "<group>"; };
 		2BBB96501E8CD86700BFBD7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */,
+				2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */,
 				2BBB96501E8CD86700BFBD7A /* Info.plist */,
 			);
 			path = PMThirdUnit;
@@ -191,6 +194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B84BBFB1E8F9AFC00B24819 /* PMThirdUnit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +242,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -283,7 +287,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -309,21 +313,84 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Aspects\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/ECLaunch\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/JSONKit-NoWarning\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/KVOController\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MSWeakTimer\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Mantle\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PBJVision\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Reachability\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/ReactiveCocoa\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Realm\"",
-					"\"${PODS_ROOT}/Realm/core\"",
+					$PODS_CONFIGURATION_BUILD_DIR,
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"Aspects\"",
+					"-l\"CPFoundationCategory\"",
+					"-l\"CocoaAsyncSocket\"",
+					"-l\"ECLaunch\"",
+					"-l\"GoogleProtobuf\"",
+					"-l\"JLRoutes\"",
+					"-l\"JSONKit-NoWarning\"",
+					"-l\"KVOController\"",
+					"-l\"KeychainWrapper\"",
+					"-l\"LDEventCollection\"",
+					"-l\"LDGeminiSDK\"",
+					"-l\"LDMediator\"",
+					"-l\"LDNetDiagnoService\"",
+					"-l\"LDPositioning\"",
+					"-l\"LDRemoteCommand\"",
+					"-l\"LDSocketPushClient\"",
+					"-l\"MKAdditions\"",
+					"-l\"MSWeakTimer\"",
+					"-l\"Mantle\"",
+					"-l\"MobileAnalysis\"",
+					"-l\"NTFeedBack\"",
+					"-l\"PBJVision\"",
+					"-l\"ProtocolBuffers\"",
+					"-l\"Reachability\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"Realm\"",
+					"-l\"bz2.1.0\"",
+					"-l\"c++\"",
+					"-l\"realm-ios\"",
+					"-l\"resolv\"",
+					"-l\"z\"",
+					"-l\"LDRoutes\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = NetEase.PMThirdUnit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -346,19 +413,82 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$PODS_CONFIGURATION_BUILD_DIR\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/AFNetworking\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Aspects\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/ECLaunch\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/JSONKit-NoWarning\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/KVOController\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/MSWeakTimer\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Mantle\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/PBJVision\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Reachability\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/ReactiveCocoa\"",
-					"\"$PODS_CONFIGURATION_BUILD_DIR/Realm\"",
-					"\"${PODS_ROOT}/Realm/core\"",
+					$PODS_CONFIGURATION_BUILD_DIR,
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"Aspects\"",
+					"-l\"CPFoundationCategory\"",
+					"-l\"CocoaAsyncSocket\"",
+					"-l\"ECLaunch\"",
+					"-l\"GoogleProtobuf\"",
+					"-l\"JLRoutes\"",
+					"-l\"JSONKit-NoWarning\"",
+					"-l\"KVOController\"",
+					"-l\"KeychainWrapper\"",
+					"-l\"LDEventCollection\"",
+					"-l\"LDGeminiSDK\"",
+					"-l\"LDMediator\"",
+					"-l\"LDNetDiagnoService\"",
+					"-l\"LDPositioning\"",
+					"-l\"LDRemoteCommand\"",
+					"-l\"LDSocketPushClient\"",
+					"-l\"MKAdditions\"",
+					"-l\"MSWeakTimer\"",
+					"-l\"Mantle\"",
+					"-l\"MobileAnalysis\"",
+					"-l\"NTFeedBack\"",
+					"-l\"PBJVision\"",
+					"-l\"ProtocolBuffers\"",
+					"-l\"Reachability\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"Realm\"",
+					"-l\"bz2.1.0\"",
+					"-l\"c++\"",
+					"-l\"realm-ios\"",
+					"-l\"resolv\"",
+					"-l\"z\"",
+					"-l\"LDRoutes\"",
+					"-framework",
+					"\"AVFoundation\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AssetsLibrary\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreData\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreImage\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"CoreMedia\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"CoreVideo\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"ImageIO\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"OpenGLES\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = NetEase.PMThirdUnit;
 				PRODUCT_NAME = "$(TARGET_NAME)";

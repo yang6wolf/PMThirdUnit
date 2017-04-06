@@ -1,0 +1,1 @@
+../../../CPFoundationCategory/Pod/Classes/NSString+Additions.h

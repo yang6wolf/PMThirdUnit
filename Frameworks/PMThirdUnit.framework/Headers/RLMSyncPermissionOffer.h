@@ -17,9 +17,9 @@
 ////////////////////////////////////////////////////////////////////////////
 
 #import <Foundation/Foundation.h>
-#import <Realm/RLMObject.h>
-#import <Realm/RLMProperty.h>
-#import <Realm/RLMSyncUtil.h>
+#import "RLMObject.h"
+#import "RLMProperty.h"
+#import "RLMSyncUtil.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

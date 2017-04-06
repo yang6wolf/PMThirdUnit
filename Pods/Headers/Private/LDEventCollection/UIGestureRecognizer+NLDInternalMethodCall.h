@@ -1,0 +1,1 @@
+../../../LDEventCollection/LDEventCollection/Helper/UIGestureRecognizer+NLDInternalMethodCall.h

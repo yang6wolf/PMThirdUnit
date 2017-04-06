@@ -18,7 +18,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <Realm/RLMCollection.h>
+#import "RLMCollection.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
