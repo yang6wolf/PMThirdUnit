@@ -28,13 +28,11 @@
 
     // retrieve the current interfaces - returns 0 on success
     success = getifaddrs(&interfaces);
-    if (success != 0) {
-        goto outLabel;
-    }
 
     // Loop through linked list of interfaces
     iter_addr = interfaces;
-    while(iter_addr != NULL) {
+    while(success &&
+          iter_addr != NULL) {
         current_addr = iter_addr;
         iter_addr = current_addr->ifa_next;
 
@@ -59,7 +57,6 @@
         }
     }
 
-outLabel:
     if (interfaces) {
         freeifaddrs(interfaces);
     }
