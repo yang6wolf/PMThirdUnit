@@ -6,7 +6,7 @@
 //
 //
 
-#import <UIKit/UIKit.h>;
+#import <UIKit/UIKit.h>
 
 #import "UIWindow+ECLaunch.h"
 
