@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-//#import "PMThirdUnit.h"
+#import "PMThirdUnit.h"
 
-//NSString *LDRoutesConst;
+NSString *LDRoutesConst;
 
-//void import_helper() {
-//  LDRoutesConst = kLDRouteViewControllerKey;
-//}
+void import_helper() {
+    LDRoutesConst = kLDRouteViewControllerKey;
+    
+    QRcode *xx = QRcode_encodeString("222", 0, 0, 0, 0);
+    QRcode_free (xx);
+}
