@@ -301,6 +301,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D2A878436AEC1D248CBA3E94 /* Pods-PMThirdUnit.debug.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+					x86_64,
+				);
 				CODE_SIGN_IDENTITY = "";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/Frameworks";
 				DEFINES_MODULE = YES;
@@ -324,7 +329,6 @@
 					"-l\"CPFoundationCategory\"",
 					"-l\"CocoaAsyncSocket\"",
 					"-l\"ECLaunch\"",
-					"-l\"GoogleProtobuf\"",
 					"-l\"JLRoutes\"",
 					"-l\"JSONKit-NoWarning\"",
 					"-l\"KVOController\"",
@@ -401,6 +405,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6BEE2BD9527364C17D9FD475 /* Pods-PMThirdUnit.release.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					i386,
+					x86_64,
+				);
 				CODE_SIGN_IDENTITY = "";
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/Frameworks";
 				DEFINES_MODULE = YES;
@@ -423,7 +432,6 @@
 					"-l\"CPFoundationCategory\"",
 					"-l\"CocoaAsyncSocket\"",
 					"-l\"ECLaunch\"",
-					"-l\"GoogleProtobuf\"",
 					"-l\"JLRoutes\"",
 					"-l\"JSONKit-NoWarning\"",
 					"-l\"KVOController\"",

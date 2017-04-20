@@ -9,41 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "LDSocketPublicDefine.h"
 
-#ifndef LDSocketPushDEBUG
-#define LDSocketPushDEBUG 0
-#endif
-
-#if LDSocketPushDEBUG
-#define LDSPLog(...) NSLog(__VA_ARGS__)
-#else
-#define LDSPLog(...) {}
-#endif
-
 extern NSString * const LDSocketPushClientErrorDomain;
 extern NSString *const LDSPClientStatusChangedNotification;
-
-typedef NS_ENUM(NSInteger, LDSPClientStatus)
-{
-    LDSPClientStatusInitial,
-    LDSPClientStatusPreparingToken,
-    LDSPClientStatusTokenPrepared,
-    LDSPClientStatusPreparingHost,
-    LDSPClientStatusHostPrepared,
-    LDSPClientStatusUnconnected = LDSPClientStatusHostPrepared,
-    LDSPClientStatusConnecting,
-    LDSPClientStatusConnected,
-    LDSPClientStatusRegistering,
-    LDSPClientStatusRegisted,
-    LDSPClientStatusReady = LDSPClientStatusRegisted,
-};
-
-typedef NS_ENUM(NSInteger, LDSocketPushClientErrorType)
-{
-    LDSocketPushClientErrorTypeDisconnected,
-    LDSocketPushClientErrorTypeRegisterClientFail,
-    LDSocketPushClientErrorTypeSubscribeTopicFail,
-    LDSocketPushClientErrorTypeUnknown,
-};
 
 @class LDSPMessage;
 

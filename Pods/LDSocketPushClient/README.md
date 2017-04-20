@@ -46,7 +46,11 @@ it, simply add the following line to your Podfile:
 ``` ruby
 pod "LDSocketPushClient"
 ```
-
+## Version
+* 0.5.0  
+  1.使用OC版本的ProtocolBuffers替换C++版本的GoogleProtobuf  
+  2.注释点Message.proto中后台使用的消息结构  
+  
 ## Author
 
 bingliu, bingliu@corp.netease.com
@@ -54,3 +58,4 @@ bingliu, bingliu@corp.netease.com
 ## License
 
 LDSocketPushClient is available under the MIT license. See the LICENSE file for more info.
+
