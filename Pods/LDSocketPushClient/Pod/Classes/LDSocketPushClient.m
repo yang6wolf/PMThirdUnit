@@ -373,6 +373,12 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
         messageLength = CFSwapInt32BigToHost(messageLength);
         messageLength += kLDSPMessageLengthWidth;
         
+        // Fabric 偶现越界，这里 check 保证不崩溃。
+        if (messageLength < 0 || messageLength > INT32_MAX){
+            LDSPLog(@"did read data out of range with messageLength %d",messageLength);
+            return;
+        }
+        
         NSInteger remainLength = data.length - messageLength;
         if (remainLength == 0) {
             [self handleRawMessage:data withTag:tag];
