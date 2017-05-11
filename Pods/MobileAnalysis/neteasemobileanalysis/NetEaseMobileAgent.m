@@ -8,6 +8,7 @@
 #import "NetEaseMobileAgent.h"
 #import "NeteaseMobileManager.h"
 #import "NetEaseMADiagnoseLog.h"
+#import "NetEaseMADNSManager.h"
 
 NSString * const kNeteaseMAOnlineAppConfigLoadNotification = @"NeteaseMAOnlineAppConfigLoadNotification";
 NSString * const kNeteaseMAOnlineAppConfigKey = @"onlineConfig";
@@ -64,6 +65,14 @@ NSString * const kNeteaseMAStartOverNotification = @"kNeteaseMAStartOverNotifica
     return self.protocolNames;
 }
 
+- (void)setDNSTrackDomains:(NSArray *)domains {
+    
+    // run it after 5s
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5.0 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[NetEaseMADNSManager shareInstance] setDNSTrackerDomains:domains];
+    });
+}
+    
 - (void)setAnalysisHost:(NSString *)host
 {
     _analysisHostName = host;

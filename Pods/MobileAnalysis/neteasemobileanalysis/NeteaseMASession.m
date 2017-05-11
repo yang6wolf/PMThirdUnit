@@ -178,9 +178,11 @@
     if (oldDeviceId) {
         [info setObject:oldDeviceId forKey:@"u0"];
     }
-    if (NSClassFromString(@"ASIdentifierManager")) {
+    if (NSClassFromString(@"ASIdentifierManager") && [[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
         NSString *adID = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-        [info setObject:adID forKey:@"u1"];
+        if (adID != nil) {
+            [info setObject:adID forKey:@"u1"];
+        }
     }
     
     [info setObject:[NetEaseMaUtils getDeviceModel] forKey:@"m"];

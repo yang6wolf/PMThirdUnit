@@ -10,8 +10,9 @@
 #import "NeteaseMASessionHTTPProtocol.h"
 #import "NetEaseMAUtils.h"
 #import "NetEaseMobileAgent.h"
+#import "NetEaseMADNSManager.h"
 
-#define CODE_FOR_FAILD_HTTP 1000
+//#define CODE_FOR_FAILD_HTTP 1000
 #define TIMESTAMP_NUMBER(interval)  [NSNumber numberWithLongLong:interval*1000]
 
 extern NSString *const kNeteaseMAStartOverNotification;
@@ -44,7 +45,9 @@ extern NSString *const kNeteaseMAStartOverNotification;
         _dnsHostResolveInfo = [NSMutableDictionary dictionary];
 
         [NeteaseMASessionHTTPProtocol setDelegate:(id<NeteaseMAHTTPProtocolDelegate>)self];
-
+        
+        [NetEaseMADNSManager shareInstance].delegate = (id<NeteaseMAHTTPProtocolDelegate>)self;
+        
         _launchTimeValid = YES;
         _launchStartTime = [NSDate timeIntervalSinceReferenceDate];
     }
@@ -155,34 +158,67 @@ extern NSString *const kNeteaseMAStartOverNotification;
 }
 
 - (void)protocolDidCompleteURL:(NSURL*)url from:(NSTimeInterval)startTime to:(NSTimeInterval)endTime withStatusCode:(NSInteger)code {
-    NSString *stringUrl = url.path;
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@", url.host, url.path];
     if (stringUrl) {
         [self addURLRecord:@{@"n":stringUrl,
                              @"st":TIMESTAMP_NUMBER(startTime),
                              @"et":TIMESTAMP_NUMBER(endTime),
+                             @"c":[NSNumber numberWithInteger:code]}];
+    }
+}
+
+- (void)protocolDidCompleteURL:(NSURL*)url from:(NSTimeInterval)startTime to:(NSTimeInterval)endTime rxBytes:(NSUInteger)rxBytes txBytes:(NSUInteger)txBytes netDetailTime:(NSDictionary *)detailDic withStatusCode:(NSInteger)code {
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@", url.host, url.path];
+    
+    if (stringUrl) {
+        [self addURLRecord:@{@"n":stringUrl,
+                             @"st":TIMESTAMP_NUMBER(startTime),
+                             @"et":TIMESTAMP_NUMBER(endTime),
+                             @"dst":detailDic[@"dnsSTime"],
+                             @"det":detailDic[@"dnsETime"],
+                             @"tst":detailDic[@"tcpSTime"],
+                             @"tet":detailDic[@"tcpETime"],
+                             @"sst":detailDic[@"sslSTime"],
+                             @"set":detailDic[@"sslETime"],
+                             @"rst":detailDic[@"reqSTime"],
+                             @"ret":detailDic[@"reqETime"],
+                             @"rpst":detailDic[@"respSTime"],
+                             @"rpet":detailDic[@"respETime"],
+                             @"rps":[NSNumber numberWithUnsignedInteger:rxBytes],
+                             @"rqs":[NSNumber numberWithUnsignedInteger:txBytes],
                              @"c":[NSNumber numberWithInteger:code]}];
     }
 }
 
 - (void)protocolDidCompleteURL:(NSURL*)url from:(NSTimeInterval)startTime to:(NSTimeInterval)endTime rxBytes:(NSUInteger)rxBytes txBytes:(NSUInteger)txBytes withStatusCode:(NSInteger)code{
-    NSString *stringUrl = url.path;
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@", url.host, url.path];
     if (stringUrl) {
         [self addURLRecord:@{@"n":stringUrl,
                              @"st":TIMESTAMP_NUMBER(startTime),
                              @"et":TIMESTAMP_NUMBER(endTime),
-                             @"rx":[NSNumber numberWithUnsignedInteger:rxBytes],
-                             @"tx":[NSNumber numberWithUnsignedInteger:txBytes],
+                             @"dst":@(0),
+                             @"det":@(0),
+                             @"tst":@(0),
+                             @"tet":@(0),
+                             @"sst":@(0),
+                             @"set":@(0),
+                             @"rst":@(0),
+                             @"ret":@(0),
+                             @"rpst":@(0),
+                             @"rpet":@(0),
+                             @"rps":[NSNumber numberWithUnsignedInteger:rxBytes],
+                             @"rqs":[NSNumber numberWithUnsignedInteger:txBytes],
                              @"c":[NSNumber numberWithInteger:code]}];
     }
 }
 
 - (void)protocolDidCompleteURL:(NSURL*)url from:(NSTimeInterval)startTime to:(NSTimeInterval)endTime withError:(NSError*)error {
-    NSString *stringUrl = url.path;
+    NSString *stringUrl = [NSString stringWithFormat:@"%@%@", url.host, url.path];
     if (stringUrl) {
         [self addURLRecord:@{@"n":stringUrl,
                              @"st":TIMESTAMP_NUMBER(startTime),
                              @"et":TIMESTAMP_NUMBER(endTime),
-                             @"c":[NSNumber numberWithInteger:CODE_FOR_FAILD_HTTP],
+                             @"c":[NSNumber numberWithInteger:[error code]],
                              @"e":[error localizedDescription]}];
     }
 }

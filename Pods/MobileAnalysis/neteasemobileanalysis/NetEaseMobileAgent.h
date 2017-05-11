@@ -68,6 +68,8 @@ extern NSString *const kNeteaseMAStartOverNotification; //第一个controller显
 - (void)setAnalysisHost:(NSString *)host;
 - (NSString *)getAnalysisHost;
 
+// 冷启动对域名校验，判断是否被劫持
+- (void)setDNSTrackDomains:(NSArray *)domains;
 
 - (void)addEvent:(NSString *)name param:(NSString *)param extra:(NSString *)extra;
 - (void)addEvent:(NSString *)name param:(NSString *)param;

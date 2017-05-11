@@ -12,6 +12,7 @@
 #import "QNSURLSessionDemux.h"
 #import "NSURLSessionConfiguration+protocol.h"
 #import "NetEaseMobileAgent.h"
+#import "NSMutableDictionary+LDSafetyDictionary.h"
 
 typedef void (^ChallengeCompletionHandler)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential * credential);
 
@@ -42,8 +43,21 @@ typedef void (^ChallengeCompletionHandler)(NSURLSessionAuthChallengeDisposition 
 @property (atomic) NSUInteger rxBytes;
 @property (atomic) NSUInteger txBytes;
 
-@property (atomic) BOOL isWebCoreThread;
+@property (nonatomic, assign) long long dnsStartTime;
+@property (nonatomic, assign) long long dnsEndTime;
+@property (nonatomic, assign) long long sslHandshakeStartTime;
+@property (nonatomic, assign) long long sslHandshakeEndTime;
+@property (nonatomic, assign) long long tcpStartTime;
+@property (nonatomic, assign) long long tcpEndTime;
+@property (nonatomic, assign) long long readStartTime;
+@property (nonatomic, assign) long long readEndTime;
+@property (nonatomic, assign) long long writeStartTime;
+@property (nonatomic, assign) long long writeEndTime;
 
+@property (nonatomic, strong) NSDictionary *netDetailDic;
+
+
+@property (atomic) BOOL isWebCoreThread;
 @end
 
 @implementation NeteaseMASessionHTTPProtocol
@@ -307,7 +321,11 @@ static NSString * kOurRecursiveRequestFlagProperty = @"com.apple.dts.NeteaseMAHT
     if (self.response) {
         NSInteger statusCode = [(NSHTTPURLResponse*)self.response statusCode];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[[self class] delegate] protocolDidCompleteURL:requestUrl from:self.startTime to:self.endTime rxBytes:self.rxBytes txBytes:self.txBytes withStatusCode:statusCode];
+            if (self.netDetailDic) {
+                [[[self class] delegate] protocolDidCompleteURL:requestUrl from:self.startTime to:self.endTime rxBytes:self.rxBytes txBytes:self.txBytes netDetailTime:self.netDetailDic withStatusCode:statusCode];
+            } else {
+                [[[self class] delegate] protocolDidCompleteURL:requestUrl from:self.startTime to:self.endTime rxBytes:self.rxBytes txBytes:self.txBytes withStatusCode:statusCode];
+            }
         });
     }
     if (self.error) {
@@ -464,6 +482,13 @@ static NSString * kOurRecursiveRequestFlagProperty = @"com.apple.dts.NeteaseMAHT
     NSCAssert(data != nil,@"data == nil");
     NSCAssert([NSThread currentThread] == self.clientThread,@"[NSThread currentThread] != self.clientThread");
     
+    if (!self.txBytes) {
+        self.txBytes += [self.request.URL.absoluteString length];
+        if(![[self.request.HTTPMethod uppercaseString] isEqualToString:@"GET"] && self.request.HTTPBody){
+            self.txBytes += self.request.HTTPBody.length;
+        }
+    }
+    
     self.rxBytes += data.length;
     
     // Just pass the call on to our client.
@@ -514,4 +539,43 @@ static NSString * kOurRecursiveRequestFlagProperty = @"com.apple.dts.NeteaseMAHT
     // -stopLoading to do that.
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
+    
+    for (NSURLSessionTaskTransactionMetrics *metric in metrics.transactionMetrics) {
+        if (metric.resourceFetchType == NSURLSessionTaskMetricsResourceFetchTypeNetworkLoad) {
+            @synchronized (self) {
+                self.dnsStartTime = [metric.domainLookupStartDate timeIntervalSince1970] * 1000;
+                self.dnsEndTime = [metric.domainLookupEndDate timeIntervalSince1970] * 1000;
+                self.writeStartTime = [metric.requestStartDate timeIntervalSince1970] * 1000;
+                self.writeEndTime = [metric.requestEndDate timeIntervalSince1970] * 1000;
+                self.readStartTime = [metric.responseStartDate timeIntervalSince1970] * 1000;
+                self.readEndTime = [metric.responseEndDate timeIntervalSince1970] * 1000;
+                self.sslHandshakeStartTime = [metric.secureConnectionStartDate timeIntervalSince1970] * 1000;
+                self.sslHandshakeEndTime = [metric.secureConnectionEndDate timeIntervalSince1970] * 1000;
+                self.tcpStartTime = [metric.connectStartDate timeIntervalSince1970] * 1000;
+                self.tcpEndTime = [metric.connectEndDate timeIntervalSince1970] * 1000;
+                self.netDetailDic = [self toDictionaryValue];
+            }
+        }
+    }
+}
+
+- (NSDictionary *)toDictionaryValue {
+    NSMutableDictionary *mutableJSONValue = [[NSMutableDictionary alloc] init];
+    [mutableJSONValue _safety_setInteger:self.dnsStartTime forKey:@"dnsSTime"];
+    [mutableJSONValue _safety_setInteger:self.dnsEndTime forKey:@"dnsETime"];
+    [mutableJSONValue _safety_setInteger:self.tcpStartTime forKey:@"tcpSTime"];
+    [mutableJSONValue _safety_setInteger:self.tcpEndTime forKey:@"tcpETime"];
+    [mutableJSONValue _safety_setInteger:self.sslHandshakeStartTime forKey:@"sslSTime"];
+    [mutableJSONValue _safety_setInteger:self.sslHandshakeEndTime forKey:@"sslETime"];
+    
+    [mutableJSONValue _safety_setInteger:self.writeStartTime forKey:@"reqSTime"];
+    [mutableJSONValue _safety_setInteger:self.writeEndTime forKey:@"reqETime"];
+    [mutableJSONValue _safety_setInteger:self.readStartTime forKey:@"respSTime"];
+    [mutableJSONValue _safety_setInteger:self.readEndTime forKey:@"respETime"];
+    
+    return mutableJSONValue;
+}
+
 @end
+

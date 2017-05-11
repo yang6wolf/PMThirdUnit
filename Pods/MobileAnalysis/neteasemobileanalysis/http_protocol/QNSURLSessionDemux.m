@@ -314,5 +314,15 @@
     }
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didFinishCollectingMetrics:(NSURLSessionTaskMetrics *)metrics {
+    QNSURLSessionDemuxTaskInfo *    taskInfo;
+    
+    taskInfo = [self taskInfoForTask:task];
+    if ([taskInfo.delegate respondsToSelector:@selector(URLSession:task:didFinishCollectingMetrics:)]) {
+        [taskInfo performBlock:^{
+            [taskInfo.delegate URLSession:session task:task didFinishCollectingMetrics:metrics];
+        }];
+    }
+}
 @end
 

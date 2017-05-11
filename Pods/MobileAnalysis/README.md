@@ -8,8 +8,9 @@
 
 * App启动，运行时间的统计；
 * Controller页面的创建、打开、关闭等事件的统计；
-* http url访问的延时、结果的统计；
+* http url访问的延时、流量、结果的统计；
 * crash率的统计
+* 特定域名 DNS 解析成功与否、是否劫持以及时间的统计
 * spdy网络基础库的集成
 
 
@@ -71,6 +72,16 @@ ios产品一般会使用第三方的crash捕获工具，这个库只统计一下
 
 @end
 ```
+
+### 特定域名 DNS 解析成功与否、是否劫持以及时间的统计
+
+由于各个客户端使用的域名都不太一样，所以这里需要客户端自己在 Appdelegate 中进行初始化，并传入想监控的域名，代码如下，将 domains 替换为自己的域名即可
+
+```
+[[NetEaseMobileAgent sharedInstance] setDNSTrackDomains:@[@"img.winyylg.cn",@"g.winyylg.com",@"srv.winyylg.com",@"api.winyylg.com"]];
+
+```
+
 
 ### 使用SPDY网络
 
