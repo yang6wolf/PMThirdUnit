@@ -86,8 +86,8 @@ static NSArray * retryIntervals = nil;
 @end
 
 //4个字节长度 + 2个字节协议 + 消息体
-static NSInteger kLDSPMessageLengthWidth = 4;
-static NSInteger kLDSPProtoBufTypeWidth = 2;
+static NSUInteger kLDSPMessageLengthWidth = 4;
+static NSUInteger kLDSPProtoBufTypeWidth = 2;
 
 static int32_t kLDSPHeartbeatRequestTag = 1;
 static int32_t kLDSPRegisterClientRequestTag = 2;
@@ -365,21 +365,21 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
         data = self.buffer;
     }
     
-    NSInteger bodyOffset = kLDSPMessageLengthWidth + kLDSPProtoBufTypeWidth;
+    NSUInteger bodyOffset = kLDSPMessageLengthWidth + kLDSPProtoBufTypeWidth;
     if (data.length > bodyOffset) {
         char lengthData[kLDSPMessageLengthWidth];
         [data getBytes:lengthData length:kLDSPMessageLengthWidth];
-        int32_t messageLength = *((int32_t *)(lengthData));
+        uint32_t messageLength = *((uint32_t *)(lengthData));
         messageLength = CFSwapInt32BigToHost(messageLength);
         messageLength += kLDSPMessageLengthWidth;
         
         // Fabric 偶现越界，这里 check 保证不崩溃。
-        if (messageLength < 0 || messageLength > INT32_MAX){
-            LDSPLog(@"did read data out of range with messageLength %d",messageLength);
-            return;
-        }
+//        if (messageLength < 0 || messageLength > INT32_MAX){
+//            LDSPLog(@"did read data out of range with messageLength %d",messageLength);
+//            return;
+//        }
         
-        NSInteger remainLength = data.length - messageLength;
+        NSUInteger remainLength = data.length - messageLength;
         if (remainLength == 0) {
             [self handleRawMessage:data withTag:tag];
             self.buffer = nil;
