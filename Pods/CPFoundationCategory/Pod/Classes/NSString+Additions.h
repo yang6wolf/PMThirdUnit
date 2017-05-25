@@ -24,4 +24,8 @@
 
 - (NSDictionary *)urlParamsDecodeDictionary;
 
+- (BOOL)isAllChinese;
+
+- (BOOL)containsChinese;
+
 @end

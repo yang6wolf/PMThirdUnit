@@ -373,18 +373,12 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
         messageLength = CFSwapInt32BigToHost(messageLength);
         messageLength += kLDSPMessageLengthWidth;
         
-        // Fabric 偶现越界，这里 check 保证不崩溃。
-//        if (messageLength < 0 || messageLength > INT32_MAX){
-//            LDSPLog(@"did read data out of range with messageLength %d",messageLength);
-//            return;
-//        }
-        
-        NSUInteger remainLength = data.length - messageLength;
-        if (remainLength == 0) {
+        if (data.length == messageLength) {
             [self handleRawMessage:data withTag:tag];
             self.buffer = nil;
             [self.socket readDataWithTimeout:-1 tag:0];
-        } else if (remainLength > 0) {
+        } else if (data.length > messageLength) {
+            NSUInteger remainLength = data.length - messageLength;
             NSData *remainData = [data subdataWithRange:NSMakeRange(messageLength, remainLength)];
             [self handleRawMessage:[data subdataWithRange:NSMakeRange(0, messageLength)] withTag:tag];
             self.buffer = nil;
@@ -393,9 +387,9 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
             if (!self.buffer) {
                 self.buffer = [data mutableCopy];
             }
-            
+            NSUInteger remainLength = messageLength - data.length;
             NSMutableData *buffer = [data mutableCopy]; //直接用 self.buffer ?
-            NSUInteger maxLength = -remainLength;
+            NSUInteger maxLength = remainLength;
             [self.socket readDataWithTimeout:-1 buffer:buffer bufferOffset:data.length maxLength:maxLength tag:0];
         }
     } else {

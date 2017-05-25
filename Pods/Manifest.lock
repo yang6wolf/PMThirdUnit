@@ -22,7 +22,7 @@ PODS:
     - CocoaAsyncSocket/RunLoop
   - CocoaAsyncSocket/GCD (7.4.3)
   - CocoaAsyncSocket/RunLoop (7.4.3)
-  - CPFoundationCategory (0.1.5):
+  - CPFoundationCategory (0.1.6):
     - KeychainWrapper (~> 0.1.0)
   - ECLaunch (0.1.0)
   - JLRoutes (1.5.5)
@@ -41,7 +41,7 @@ PODS:
     - LDNetDiagnoService (~> 1.2.0)
   - LDRoutes (0.0.3):
     - JLRoutes (~> 1.5.1)
-  - LDSocketPushClient (0.5.1):
+  - LDSocketPushClient (0.5.2):
     - CocoaAsyncSocket (~> 7.4.3)
     - MSWeakTimer (~> 1.1.0)
     - ProtocolBuffers
@@ -89,7 +89,7 @@ DEPENDENCIES:
   - LDNetDiagnoService (~> 1.2.5)
   - LDRemoteCommand (~> 0.0.5)
   - LDRoutes (~> 0.0.1)
-  - LDSocketPushClient (= 0.5.1)
+  - LDSocketPushClient (= 0.5.2)
   - libqrencode
   - Mantle (= 2.0.7)
   - MKAdditions (= 0.1.1)
@@ -99,13 +99,13 @@ DEPENDENCIES:
   - PBJVision (= 0.4.0)
   - Reachability (~> 3.2)
   - ReactiveCocoa (~> 2.4.7)
-  - Realm
+  - Realm (= 2.5.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Aspects: 7595ba96a6727a58ebcbfc954497fc5d2fdde546
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
-  CPFoundationCategory: 747928c252cc678548f3f9a13d1d007377448834
+  CPFoundationCategory: 16df3ed73d7ca9c5d98e54da883ae0236dc65b57
   ECLaunch: 6b6ccf0867db143bff059ed71d5a2ff0ea4dacae
   JLRoutes: d191a496b820f60d70225202d04289582da962df
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
@@ -118,7 +118,7 @@ SPEC CHECKSUMS:
   LDPositioning: b01c068a257364c856c3b3e01e40e0d5e3642633
   LDRemoteCommand: aef240066d110aeff451a0a4b021ab0f2e59b1b0
   LDRoutes: 97066a1745d57d4a15032357cfe37d8df292dbc7
-  LDSocketPushClient: 05b2775c587a37ce8106ce487b7f01b676cbaddc
+  LDSocketPushClient: 6302a0e64500c693488670f0ca0c97835edf40a9
   libqrencode: 43dc34b89af83ea4b07c409cd8e09c87aa3a1c9f
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MKAdditions: 7c68a408ad6795e20eecd6920592002781e0ef61
@@ -131,6 +131,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
 
-PODFILE CHECKSUM: cd50bdc8b4a3f322d1ca941246238f34b8cc6d12
+PODFILE CHECKSUM: 9f93d899bd2164517dfbcc838e3f06362121b8ce
 
 COCOAPODS: 1.2.0

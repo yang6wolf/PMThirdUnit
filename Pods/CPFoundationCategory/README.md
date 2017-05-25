@@ -43,6 +43,9 @@ it, simply add the following line to your Podfile:
 * 0.1.5
     空Assets文件导致XCode8.1签名错误，修改Spec文件和删除Assets文件
 
+* 0.1.6
+    NSString+Additions增加判断中文方法
+
 ## Author
 
 fanxuejiao, fanxuejiao@corp.netease.com

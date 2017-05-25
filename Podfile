@@ -9,7 +9,7 @@ target 'PMThirdUnit' do
   pod 'MSWeakTimer', '~> 1.1.0'
   pod 'JSONKit-NoWarning', '~> 1.2'
   pod 'Mantle', '2.0.7'
-  pod 'Realm'
+  pod 'Realm', '2.5.0'
   pod 'Aspects', '~> 1.4'
   pod 'ECLaunch', '~> 0.1.0'
   pod 'Reachability', '~>3.2', :inhibit_warnings => true
@@ -30,7 +30,7 @@ target 'PMThirdUnit' do
   pod 'LDEventCollection', '~> 0.2.3'
   pod 'LDGeminiSDK', '~> 0.1.0'
   pod 'LDMediator', '~> 0.1.0'
-  pod 'LDSocketPushClient', '0.5.1'
+  pod 'LDSocketPushClient', '0.5.2'
 
   pod 'CPFoundationCategory', '~> 0.1.1'
   pod 'libqrencode' #LDShare 需要依赖本库
