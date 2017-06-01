@@ -1,4 +1,4 @@
-更新tag至1.0.6
+#更新tag至1.0.6
 Pod::Spec.new do |s|
 
   s.name         = "PMThirdUnit"
