@@ -1,8 +1,7 @@
-#更新tag至1.0.6
 Pod::Spec.new do |s|
 
   s.name         = "PMThirdUnit"
-  s.version      = "1.0.7"
+  s.version      = "4.0.0"
   s.summary      = "贵金属项目所使用的第三方组件(非UI部分)"
   s.homepage     = "https://git.ms.netease.com/preciousmetals/PMThirdUnit"
   s.license      = { :type => 'MIT', :file => 'LICENSE'}
