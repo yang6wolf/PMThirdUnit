@@ -189,6 +189,10 @@ iOS 8 and Later
 最好在viewDidLoad方法执行前设置好！！！
 
 ## Version
+* 0.3.1
+
+    * 修复 viewPath 获取错误的Bug；
+
 * 0.3.0
 
     * 修改SDK支持的最低系统版本为iOS 8.0；

@@ -65,11 +65,11 @@
     NSArray *pathInfo = [aView NLD_viewPathAndDepthPath];
     
     NSString *depthPathKey = [NSString stringWithFormat:@"%@DepthPath", aKey];
-    NSString *depthPath = pathInfo[0];
+    NSString *depthPath = pathInfo[1];
     [self setValue:depthPath forKey:depthPathKey];
     
     NSString *viewPathKey = [NSString stringWithFormat:@"%@Path", aKey];
-    NSString *viewPath = pathInfo[1];
+    NSString *viewPath = pathInfo[0];
     
     /* 不再替换viewPath
     if (viewController && [viewController isKindOfClass:[UINavigationController class]]) {
