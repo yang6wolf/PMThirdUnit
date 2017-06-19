@@ -147,11 +147,11 @@ NLDNotificationNameDefine(NLDNotificationSwipeGesture)
                 NSMutableDictionary *userInfo = [NSMutableDictionary NLD_dictionary];
                 [userInfo NLD_setViewOrNil:targetView];
                 
-                [UIViewController updateCurrentPageWithEvent:gesture pageName:userInfo[@"controller"]];
-                
                 //            [userInfo setValue:target forKey:@"target"];
                 [userInfo setValue:NSStringFromSelector(action) forKey:@"action"];
                 UIViewController *controller = [targetView NLD_controller];
+                
+                [UIViewController updateCurrentPageWithEvent:gesture controller:controller pageName:userInfo[@"controller"]];
                 
                 NSMutableDictionary *additionalDict = [NSMutableDictionary dictionaryWithCapacity:2];
                 NSDictionary *relativeInfo = [[NLDRemoteEventManager sharedManager] tryToCollectDataWithCurrentView:targetView eventName:gesture];
@@ -225,11 +225,11 @@ NLDNotificationNameDefine(NLDNotificationSwipeGesture)
                 NSMutableDictionary *userInfo = [NSMutableDictionary NLD_dictionary];
                 [userInfo NLD_setViewOrNil:targetView];
                 
-                [UIViewController updateCurrentPageWithEvent:gesture pageName:userInfo[@"controller"]];
-                
                 //            [userInfo setValue:target forKey:@"target"];
                 [userInfo setValue:NSStringFromSelector(action) forKey:@"action"];
                 UIViewController *controller = [targetView NLD_controller];
+                
+                [UIViewController updateCurrentPageWithEvent:gesture controller:controller pageName:userInfo[@"controller"]];
                 
                 NSMutableDictionary *additionalDict = [NSMutableDictionary dictionaryWithCapacity:2];
                 NSDictionary *relativeInfo = [[NLDRemoteEventManager sharedManager] tryToCollectDataWithCurrentView:targetView eventName:gesture];

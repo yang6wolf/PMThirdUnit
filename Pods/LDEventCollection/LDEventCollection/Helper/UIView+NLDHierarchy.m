@@ -41,15 +41,15 @@
 
 - (nullable NSString *)NLD_viewPathInControllerOrWindow
 {
-    return [self caculateViewRoute:YES];
+    return [[self NLD_viewPathAndDepthPath] firstObject];
 }
 
 - (nullable NSString *)NLD_depthPathInControllerOrWindow
 {
-    return [self caculateViewRoute:NO];
+    return [[self NLD_viewPathAndDepthPath] lastObject];
 }
 
-- (nullable NSString *)caculateViewRoute:(BOOL)isViewPath
+- (NSArray<NSString *> *)NLD_viewPathAndDepthPath
 {
     NSString *viewPath = nil;
     NSString *depthPath = nil;
@@ -108,7 +108,7 @@
             
             view = collection;
         } else {
-//            NSUInteger idx = [view.superview.subviews indexOfObject:view];
+            //            NSUInteger idx = [view.superview.subviews indexOfObject:view];
             NSUInteger idx = 0;
             if (!controller) {
                 idx = [view NLD_indexAtSuperViewSameSubviews];
@@ -133,7 +133,7 @@
         NSString *depth = @"";
         while (![view isKindOfClass:[reuseContainer class]]) {
             path = [NSString stringWithFormat:@"%@-%@", [NSStringFromClass([view class]) NLD_removeSwiftModule], path];
-//            NSUInteger idx = [view.superview.subviews indexOfObject:view];
+            //            NSUInteger idx = [view.superview.subviews indexOfObject:view];
             NSUInteger idx = [view NLD_indexAtSuperViewSameSubviews];
             depth = [NSString stringWithFormat:@"%lu-%@", (unsigned long)idx, depth];
             view = view.superview;
@@ -158,11 +158,10 @@
         depthPath = fromControllerDepthPaths;
     }
     
-    if (isViewPath) {
-        return [viewPath stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
-    } else {
-        return [depthPath stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
-    }
+    viewPath = [viewPath stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
+    depthPath = [depthPath stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-"]];
+    
+    return @[viewPath,depthPath];
 }
 
 - (nullable UIViewController *)manageViewController:(__kindof UIView *)view

@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, NLDScreenshotType) {
 @property (nonatomic, weak) id<NLDImageUploaderDelegate> delegate;
 
 - (void)uploadImage:(nonnull UIImage *)image fileName:(nonnull NSString *)fileName type:(NLDScreenshotType)type;
+- (void)uploadImage:(nonnull UIImage *)image fileName:(nonnull NSString *)fileName parentVC:(nullable NSString *)parentVC type:(NLDScreenshotType)type;
 
 @end
 

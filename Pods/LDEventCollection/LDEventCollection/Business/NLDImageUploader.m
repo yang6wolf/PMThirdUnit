@@ -33,7 +33,13 @@
 
 - (void)uploadImage:(nonnull UIImage *)image fileName:(nonnull NSString *)fileName type:(NLDScreenshotType)type
 {
+    [self uploadImage:image fileName:fileName parentVC:nil type:type];
+}
+
+- (void)uploadImage:(nonnull UIImage *)image fileName:(nonnull NSString *)fileName parentVC:(nullable NSString *)parentVC type:(NLDScreenshotType)type
+{
     fileName = [fileName NLD_removeSwiftModule];
+    parentVC = [parentVC NLD_removeSwiftModule];
     NSString *urlString = [NSString stringWithFormat:@"%@img/upload", _domain];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     [request setHTTPMethod:@"POST"];
@@ -44,7 +50,7 @@
     NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", BoundaryConstant];
     [request addValue:contentType forHTTPHeaderField: @"Content-Type"];
     
-    NSData *bodyData = [self requestBodyWithImage:image boundary:BoundaryConstant fileName:fileName];
+    NSData *bodyData = [self requestBodyWithImage:image boundary:BoundaryConstant fileName:fileName parentVC:parentVC];
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionUploadTask *dataTask = [session uploadTaskWithRequest:request fromData:bodyData completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
@@ -74,7 +80,7 @@
 
 #pragma mark - private method
 
-- (NSData *)requestBodyWithImage:(UIImage *)image boundary:(NSString *)boundaryString fileName:(NSString *)fileName
+- (NSData *)requestBodyWithImage:(UIImage *)image boundary:(NSString *)boundaryString fileName:(NSString *)fileName parentVC:(NSString *)parentVC
 {
     NSMutableString *bodyString = [NSMutableString string];
     [bodyString appendFormat:@"--%@\r\n", boundaryString];
@@ -89,6 +95,12 @@
     [bodyString appendFormat:@"Content-Disposition: form-data; name=\"version\"\r\n\r\n"];
     NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     [bodyString appendFormat:@"%@\r\n", appVersion];
+    
+    if (parentVC) {
+        [bodyString appendFormat:@"--%@\r\n", boundaryString];
+        [bodyString appendFormat:@"Content-Disposition: form-data; name=\"parentPage\"\r\n\r\n"];
+        [bodyString appendFormat:@"%@\r\n", parentVC];
+    }
     
     [bodyString appendFormat:@"--%@\r\n", boundaryString];
     [bodyString appendFormat:@"Content-Disposition: form-data; name=\"file\"; filename=\"%@.png\"\r\n", fileName];

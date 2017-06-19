@@ -66,10 +66,6 @@ NLDNotificationNameDefine(NLDNotificationReceiveRemoteNotification)
         NSMutableDictionary *userInfo = [NSMutableDictionary NLD_dictionary];
         [userInfo NLD_setButtonOrNil:sender];
         
-        if (userInfo[@"controller"]) {
-            [UIViewController updateCurrentPageWithEvent:NLDNotificationButtonClick pageName:userInfo[@"controller"]];
-        }
-        
         NLDEventCollectionManager *collectManager = [NLDEventCollectionManager sharedManager];
 
         NSString *className = @"";
@@ -77,6 +73,10 @@ NLDNotificationNameDefine(NLDNotificationReceiveRemoteNotification)
             UIView *view = (UIView *)sender;
             UIViewController *controller = [view NLD_controller];
             className = NSStringFromClass([controller class]);
+            
+            if (userInfo[@"controller"]) {
+                [UIViewController updateCurrentPageWithEvent:NLDNotificationButtonClick controller:controller pageName:userInfo[@"controller"]];
+            }
         }
         
         BOOL shouldMsgSend = [receiver respondsToSelector:newSel] && !collectManager.infoBlock;

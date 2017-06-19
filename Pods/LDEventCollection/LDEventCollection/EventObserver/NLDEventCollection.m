@@ -10,8 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <objc/message.h>
 #import "NLDRNTouchHandler.h"
-
-
+#import <WebKit/WebKit.h>
 
 /**
  *  此类只用于自动调用UIKit类的NLD_swizz方法
@@ -36,6 +35,7 @@
         ((void ( *)(id, SEL))objc_msgSend)(UITableView.self, selector);
         ((void ( *)(id, SEL))objc_msgSend)(UICollectionView.self, selector);
         ((void ( *)(id, SEL))objc_msgSend)(UIWebView.self, selector);
+        ((void ( *)(id, SEL))objc_msgSend)(WKWebView.self, selector);
         ((void ( *)(id, SEL))objc_msgSend)(UIViewController.self, selector);
         ((void ( *)(id, SEL))objc_msgSend)(UINavigationController.self, selector);
         ((void ( *)(id, SEL))objc_msgSend)(UIAlertView.self, selector);

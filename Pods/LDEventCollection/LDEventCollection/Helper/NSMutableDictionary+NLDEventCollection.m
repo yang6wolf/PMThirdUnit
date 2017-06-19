@@ -40,7 +40,9 @@
     UIViewController *viewController = [aView NLD_controller];
     NSString *pageName = nil;
     if (viewController) {
-        pageName = [viewController controllerName];
+        // 查找已配置的页面
+        UIViewController *nearestVC = [viewController nearestViewController];
+        pageName = [nearestVC controllerName];
         [self setValue:pageName forKey:@"controller"];
         
         [self replacePageNameIfNeeded:viewController];
@@ -60,12 +62,14 @@
     NSString *viewFrameKey = [NSString stringWithFormat:@"%@Frame", aKey];
     [self setValue:[NSValue valueWithCGRect:[aView NLD_absoluteRectToWindow]] forKey:viewFrameKey];
     
+    NSArray *pathInfo = [aView NLD_viewPathAndDepthPath];
+    
     NSString *depthPathKey = [NSString stringWithFormat:@"%@DepthPath", aKey];
-    NSString *depthPath = [aView NLD_depthPathInControllerOrWindow];
+    NSString *depthPath = pathInfo[0];
     [self setValue:depthPath forKey:depthPathKey];
     
     NSString *viewPathKey = [NSString stringWithFormat:@"%@Path", aKey];
-    NSString *viewPath = [aView NLD_viewPathInControllerOrWindow];
+    NSString *viewPath = pathInfo[1];
     
     /* 不再替换viewPath
     if (viewController && [viewController isKindOfClass:[UINavigationController class]]) {

@@ -14,6 +14,7 @@
 #import "LDActivePositioning.h"
 #import "LDPassivePositioning.h"
 #import "NLDAppInfoUtils.h"
+#import "NLDEventCollectionManager.h"
 
 @interface NLDRemoteEventManager ()
 
@@ -163,15 +164,24 @@
         }
         
         NSString *key = eventModel.targetViewRoute.propertyKey;
-        if (!resultDict) {
-            resultDict = [NSMutableDictionary dictionaryWithCapacity:2];
-        }
+        NSDictionary *KVCInfo = @{@"appVersion":[NLDAppInfoUtils appBuildVersion],
+                                 @"keyPath":keyValuePath,
+                                 @"keyName":key
+                                 };
         if (kvcAvailable) {
+            if (!resultDict) {
+                resultDict = [NSMutableDictionary dictionaryWithCapacity:2];
+            }
             [resultDict setObject:value forKey:key];
+            
+            // 发送成功的事件
+            NSString *eventName = @"KVC_SUCCESS";
+            [self addKVCEvent:eventName withParams:KVCInfo];
+            
         } else {
-            NSString *errorKey = @"KVC_ERROR";
-            NSString *errorMsg = [NSString stringWithFormat:@"appVersion=%@, keyPath=%@", [NLDAppInfoUtils appBuildVersion], keyValuePath];
-            [resultDict setValue:errorMsg forKey:errorKey];
+            // 发送失败的事件
+            NSString *eventName = @"KVC_ERROR";
+            [self addKVCEvent:eventName withParams:KVCInfo];
         }
         
         /*
@@ -222,6 +232,11 @@
             [self getAllSubviews:subview subViewClsName:clsName];
         }
     }
+}
+
+- (void)addKVCEvent:(NSString *)eventName withParams:(NSDictionary<NSString *, NSString *> *)params
+{
+    [[NLDEventCollectionManager sharedManager] addEventName:eventName withParams:params];
 }
     
 /*

@@ -8,6 +8,8 @@
 
 #import "UIViewController+NLDInternalMethod.h"
 #import "UIViewController+NLDAdditionalInfo.h"
+#import "NLDRemotePageService.h"
+#import "NSString+NLDAddition.h"
 
 NSString * currentShowingPage = @"";
 NSString * currentClickedPage = @"";
@@ -36,7 +38,9 @@ NSString * currentActivePage = @"";
     if (!rootVC) {
         rootVC = [UIApplication sharedApplication].delegate.window.rootViewController;
     }
-    return [self currentViewControllerRecursivityWithRootViewController:rootVC includeChild:isChildInclude];
+    
+    UIViewController *currentViewController = [self currentViewControllerRecursivityWithRootViewController:rootVC includeChild:isChildInclude];
+    return [currentViewController nearestViewController];
 }
 
 + (UIViewController *)currentViewControllerRecursivityWithRootViewController:(UIViewController *)rootViewController
@@ -66,24 +70,24 @@ NSString * currentActivePage = @"";
     }
 }
 
-+ (UIImage *)currentPageScreenShot
+- (UIImage *)currentPageScreenShot
 {
     // 截取当前页面
-    //    UIGraphicsBeginImageContext(self.view.frame.size);
-    //    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    //    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    //    UIGraphicsEndImageContext();
-    //
-    //    return viewImage;
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [self.view.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return viewImage;
     
     // 截取整个屏幕
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    return [self screenShotForWindow:window];
+//    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+//    return [self screenShotForWindow:window];
 }
 
-+ (UIImage *)screenShotForWindow:(UIWindow *)window {
-    if (![window isKindOfClass:[UIWindow class]]) {
-        return nil;
++ (UIImage *)screenShotForWindow:(nullable UIWindow *)window {
+    if (!window) {
+        window = [UIApplication sharedApplication].delegate.window;
     }
     
     UIGraphicsBeginImageContext(window.frame.size);
@@ -122,8 +126,18 @@ NSString * currentActivePage = @"";
 //    return pageName;
 }
 
-+ (void)updateCurrentPageWithEvent:(NSString *)eventName pageName:(NSString *)pageName
++ (void)updateCurrentPageWithEvent:(NSString *)eventName controller:(UIViewController *)viewController pageName:(NSString *)pageName
 {
+    if (!viewController) {
+        return;
+    }
+    
+    // 检测是否是子VC，如果是，需要在已配置的列表中
+    NSArray<NSString *> *childViewControllers = [[NLDRemotePageService defaultService] childViewControllers];
+    if ([viewController isChildViewController] && ![childViewControllers containsObject:[pageName NLD_removeSwiftModule]]) {
+        return;
+    }
+    
     if ([eventName isEqualToString:@"NLDNotificationShowController"]) {
         // TODO: 后续需要继续补充此列表
         NSArray *blackList = @[@"UIAlertController", @"UIInputWindowController", @"UICompatibilityInputViewController"];
@@ -155,6 +169,44 @@ NSString * currentActivePage = @"";
 //        return currentShowingPage;
     }
     return [currentVC controllerName];
+}
+
+- (BOOL)isChildViewController
+{
+    if (!self.parentViewController) {
+        return NO;
+    } else if ([self.parentViewController isKindOfClass:[UINavigationController class]] ||
+               [self.parentViewController isKindOfClass:[UITabBarController class]]) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+// 查找最近的页面
+- (UIViewController *)nearestViewController
+{
+    NSArray<NSString *> *childViewControllers = [[NLDRemotePageService defaultService] childViewControllers];
+    NSString *pageName = [NSStringFromClass([self class]) NLD_removeSwiftModule];
+    if ([self isChildViewController] &&
+        ![childViewControllers containsObject:pageName]) {
+        return [self findNearestParentVC];
+    }
+    
+    return self;
+}
+
+- (UIViewController *)findNearestParentVC
+{
+    UIViewController *parentViewController = self.parentViewController;
+    NSArray<NSString *> *childViewControllers = [[NLDRemotePageService defaultService] childViewControllers];
+    NSString *pageName = [NSStringFromClass([parentViewController class]) NLD_removeSwiftModule];
+    if ([parentViewController isChildViewController] &&
+        ![childViewControllers containsObject:pageName]) {
+        return [parentViewController findNearestParentVC];
+    } else {
+        return parentViewController;
+    }
 }
 
 @end

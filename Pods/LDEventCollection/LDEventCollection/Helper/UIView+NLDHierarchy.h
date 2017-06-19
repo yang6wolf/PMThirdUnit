@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIView (NLDHierarchy)
 
 /**
@@ -25,8 +27,21 @@
  */
 - (nullable NSString *)NLD_pathToControllerOrWindow;
 
+/**
+ * 获取view的path
+ */
 - (nullable NSString *)NLD_viewPathInControllerOrWindow;
+
+/**
+ * 获取view的depthPath
+ */
 - (nullable NSString *)NLD_depthPathInControllerOrWindow;
+
+/**
+ * 获取view的path & depthPath
+ * @return 以数组的形式返回，第一个是viewPath、第二个是depthPath
+ */
+- (NSArray<NSString *> *)NLD_viewPathAndDepthPath;
 
 /**
  *  此View相对窗口的绝对位置。
@@ -36,3 +51,5 @@
 - (CGRect)NLD_absoluteRectToWindow;
 
 @end
+
+NS_ASSUME_NONNULL_END

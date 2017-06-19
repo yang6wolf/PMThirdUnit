@@ -49,11 +49,6 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
 - (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel eventDomain:(nullable NSString *)eventUploadDomain imageDomain:(nullable NSString *)imageUploadDomain;
 
 /**
- *  设置渠道号（已废弃：因为在init之后设置channel不会再次上传到后台）
- */
-//- (void)setChannel:(nonnull NSString *)channel;
-
-/**
  *  设置一个用于检测用户手机是否安装了这些应用 (注意：需要将这些待检测的app添加到白名单中，否则检测结果不准确）
  *
  *  @param checkAppList 需要检测的应用列表
@@ -61,7 +56,7 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
 - (void)setCheckAppList:(nonnull NSArray<NSString *> *)checkAppList;
 
 /**
- *  添加一个用户事件(如登陆、登出事件）
+ *  添加一个用户自定义事件(如登陆、登出事件）
  *  @param  eventName   事件名称
  *  @param  params      字典类型，该字典内容必须是可以json化的
  */
@@ -78,6 +73,15 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
  *  @param  isEnable  默认为NO，如果设为YES，需要在项目的info.plist中设置NSLocationWhenInUseUsageDescription，否则无法获取权限。
  */
 - (void)setEnableLocationUpload:(BOOL)isEnable;
+
+/**
+ *  设置作为页面的子VC，由用研人员指定哪些子VC当做独立页面
+ *  业务方在集成时，需要如下 2 步操作：
+ *  1.首先通过接口：http://data.ms.netease.com/view/page/list?appkey=gold_lede_ios&filter=true 获取子VC配置列表，可以在浏览器中执行请求即可。注意，url中的appkey的值根据各产品修改成相应的值。
+ *  2.调用此接口，将第 1 步获取到的页面列表设置进来。
+ *  @param  childViewControllers  作为单独页面的子VC列表
+ */
+- (void)setChildViewControllers:(NSArray<NSString *> *)childViewControllers;
 
 /** 
  *  暂时不再公开此方法，以防数据的重复上报

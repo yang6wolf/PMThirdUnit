@@ -95,7 +95,7 @@ NLDNotificationNameDefine(NLDNotificationDismissController)
         NSString *pageName = [receiver controllerName];
         [userInfo setValue:pageName forKey:@"controller"];
         
-        [UIViewController updateCurrentPageWithEvent:NLDNotificationShowController pageName:pageName];
+        [UIViewController updateCurrentPageWithEvent:NLDNotificationShowController controller:receiver pageName:userInfo[@"controller"]];
         
         if ([receiver respondsToSelector:@selector(NLD_addInfoForShowController)]) {
             [userInfo setValue:[receiver NLD_addInfoForShowController] forKey:@"addition"];
@@ -123,7 +123,7 @@ NLDNotificationNameDefine(NLDNotificationDismissController)
                                    @"controller": pageName
                                    };
         
-        [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationDidShowController object:nil userInfo:userInfo.copy];
+        [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationDidShowController object:receiver userInfo:userInfo.copy];
         
         [NSNotificationCenter NLD_postMethodHookNotificationName:kNLDViewDidAppearNotification userInfo:@{@"pageName": pageName}];
     }];

@@ -20,6 +20,7 @@
 #import "NLDLocationService.h"
 #import "NLDRemoteEventManager.h"
 #import "NLDRNPageManager.h"
+#import "NLDRemotePageService.h"
 
 NLDNotificationNameDefine(NLDNotificationABTest)
 
@@ -99,6 +100,13 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
     
     // 程序进入后台时，将数据保存至本地，并上传
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDataOnBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    // DEBUG 时自动向后台请求页面配置
+#if DEBUG
+    [[NLDRemotePageService defaultService] setAppKey:appKey];
+    [[NLDRemotePageService defaultService] fetchScreenShotPages];
+//    [[NLDRemotePageService defaultService] fetchChildViewControllers];
+#endif
 }
 
 - (void)setChannel:(NSString *)channel
@@ -180,6 +188,11 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
 //        return;
 //    }
 //    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+- (void)setChildViewControllers:(NSArray<NSString *> *)childViewControllers
+{
+    [[NLDRemotePageService defaultService] setChildViewControllers:childViewControllers];
 }
 
 /* 暂时关闭

@@ -34,6 +34,7 @@
 #import "NLDLocationService.h"
 #import "NLDAppInfoUtils.h"
 #import "UIViewController+NLDInternalMethod.h"
+#import "NLDRemotePageService.h"
 
 @interface NLDEventCollector ()
 @property (nonatomic, copy, nonnull) NSString *sessionId;
@@ -64,43 +65,7 @@
         _deviceId = deviceId;
         _channel = channel;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppWillTerminal:) name:UIApplicationWillTerminateNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleButtonClickEvent:) name:NLDNotificationButtonClick object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppOpenUrlEvent:) name:NLDNotificationAppOpenUrl object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScreenTouchEvent:) name:NLDNotificationScreenSingleTouch object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidReceiveRemoteNotification:) name:NLDNotificationReceiveRemoteNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollEndDragEvent:) name:NLDNotificationScrollViewWillEndDragging object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollEndZoomEvent:) name:NLDNotificationScrollViewDidEndZooming object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollToTopEvent:) name:NLDNotificationScrollViewDidScrollToTop object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollDidStop:) name:NLDNotificationScrollViewDidStop object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTableSelectEvent:) name:NLDNotificationTableViewDidSelectRow object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCollectionSelectEvent:) name:NLDNotificationCollectionViewDidSelectIndexPath object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTapEvent:) name:NLDNotificationTapGesture object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLongPressEvent:) name:NLDNotificationLongPressGesture object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePanEvent:) name:NLDNotificationPanGesture object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSwipeEvent:) name:NLDNotificationSwipeGesture object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebWillLoadEvent:) name:NLDNotificationWebWillLoadRequest object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebStartLoadEvent:) name:NLDNotificationWebStartLoad object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebFinishLoadEvent:) name:NLDNotificationWebFinishLoad object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebFailLoadEvent:) name:NLDNotificationWebFailedLoad object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePushEvent:) name:NLDNotificationPushController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopEvent:) name:NLDNotificationPopController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopToEvent:) name:NLDNotificationPopToController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopToRootEvent:) name:NLDNotificationPopToRoot object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePresentEvent:) name:NLDNotificationPresentController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDismissEvent:) name:NLDNotificationDismissController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewControllerEvent:) name:NLDNotificationNewController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShowControllerEvent:) name:NLDNotificationShowController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidShowControllerEvent:) name:NLDNotificationDidShowController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleHideControllerEvent:) name:NLDNotificationHideController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDestoryControllerEvent:) name:NLDNotificationDestoryController object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCheckAppInstallListEvent:) name:NLDNotificationAppInstallList object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleABTest:) name:NLDNotificationABTest object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLocationUpload:) name:NLDNotificationLocationUpload object:nil];
+        [self addObservers];
         
         NSString *timeStamp = [NSString stringWithFormat:@"%.0f", [[NSDate date] timeIntervalSince1970] * 1000];
         _sessionId = [[NSString stringWithFormat:@"%@_%@", self.deviceId, timeStamp] NLD_md5String];
@@ -119,6 +84,47 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)addObservers
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppDidFinishLaunching:) name:UIApplicationDidFinishLaunchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppWillTerminal:) name:UIApplicationWillTerminateNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleButtonClickEvent:) name:NLDNotificationButtonClick object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAppOpenUrlEvent:) name:NLDNotificationAppOpenUrl object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScreenTouchEvent:) name:NLDNotificationScreenSingleTouch object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidReceiveRemoteNotification:) name:NLDNotificationReceiveRemoteNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollEndDragEvent:) name:NLDNotificationScrollViewWillEndDragging object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollEndZoomEvent:) name:NLDNotificationScrollViewDidEndZooming object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollToTopEvent:) name:NLDNotificationScrollViewDidScrollToTop object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleScrollDidStop:) name:NLDNotificationScrollViewDidStop object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTableSelectEvent:) name:NLDNotificationTableViewDidSelectRow object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCollectionSelectEvent:) name:NLDNotificationCollectionViewDidSelectIndexPath object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleTapEvent:) name:NLDNotificationTapGesture object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLongPressEvent:) name:NLDNotificationLongPressGesture object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePanEvent:) name:NLDNotificationPanGesture object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleSwipeEvent:) name:NLDNotificationSwipeGesture object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebWillLoadEvent:) name:NLDNotificationWebWillLoadRequest object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebStartLoadEvent:) name:NLDNotificationWebStartLoad object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebFinishLoadEvent:) name:NLDNotificationWebFinishLoad object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleWebFailLoadEvent:) name:NLDNotificationWebFailedLoad object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePushEvent:) name:NLDNotificationPushController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopEvent:) name:NLDNotificationPopController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopToEvent:) name:NLDNotificationPopToController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePopToRootEvent:) name:NLDNotificationPopToRoot object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handlePresentEvent:) name:NLDNotificationPresentController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDismissEvent:) name:NLDNotificationDismissController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewControllerEvent:) name:NLDNotificationNewController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShowControllerEvent:) name:NLDNotificationShowController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidShowControllerEvent:) name:NLDNotificationDidShowController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleHideControllerEvent:) name:NLDNotificationHideController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDestoryControllerEvent:) name:NLDNotificationDestoryController object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCheckAppInstallListEvent:) name:NLDNotificationAppInstallList object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleABTest:) name:NLDNotificationABTest object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleLocationUpload:) name:NLDNotificationLocationUpload object:nil];
 }
 
 - (void)addEventName:(nonnull NSString *)eventName withParams:(nullable NSDictionary<NSString *, NSString *> *)params
@@ -635,7 +641,7 @@
 {
     NSDictionary *userInfo = notification.userInfo;
     NLDDataEntity<NLDWebViewEvent> *event = [[NLDDataEntity<NLDWebViewEvent> alloc] initWithProtocol:@protocol(NLDWebViewEvent)];
-    event.eventName = NLDEventWebLoad;
+    event.eventName = NLDEventWebLoadFailed;
     event.appKey = self.appKey;
     event.sessionId = self.sessionId;
     event.deviceId = self.deviceId;
@@ -733,6 +739,7 @@
 /// NLDNotificationNewController
 - (void)handleNewControllerEvent:(NSNotification *)notification
 {
+    /* 
     NSDictionary *userInfo = notification.userInfo;
     NLDDataEntity<NLDPageEvent> *event = [[NLDDataEntity<NLDPageEvent> alloc] initWithProtocol:@protocol(NLDPageEvent)];
     event.eventName = NLDEventNewController;
@@ -745,6 +752,7 @@
     [self.eventCache addEvent:event];
     
     LDECLog(@"收集到事件名：%@ \n 参数信息：%@", event.eventName, [event toDictionary]);
+     */
 }
 
 /// NLDNotificationShowController
@@ -767,18 +775,21 @@
 /// NLDNotificationDidShowController
 - (void)handleDidShowControllerEvent:(NSNotification *)notification
 {
+#if DEBUG
+    
     NSDictionary *userInfo = notification.userInfo;
-    if ([NLDImageUploader sharedUploader].isEnableUpload) {
-        // 获取截图并上传
-        if (userInfo[@"controller"]) {
-            __block UIImage *screenImage = nil;
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                screenImage = [UIViewController currentPageScreenShot];
-            });
-            NSString *imageName = userInfo[@"controller"];
-            [[NLDImageUploader sharedUploader] uploadImage:screenImage fileName:imageName type:NLDAutoScreenshot];
-        }
+    UIViewController *currentVC = (UIViewController *)notification.object;
+    NSString *imageName = userInfo[@"controller"];
+    
+    // 如果当前是别名页面，则分别上传不带别名的页面 & 带别名的页面
+    if ([imageName rangeOfString:@"#"].location != NSNotFound) {
+        NSString *originName = [imageName componentsSeparatedByString:@"#"][0];
+        [self uploadImageWithController:currentVC imageName:originName];
     }
+    
+    [self uploadImageWithController:currentVC imageName:imageName];
+    
+#endif
 }
 
 /// NLDNotificationHideController
@@ -801,6 +812,7 @@
 /// NLDNotificationDestoryController
 - (void)handleDestoryControllerEvent:(NSNotification *)notification
 {
+    /*
     NSDictionary *userInfo = notification.userInfo;
     NLDDataEntity<NLDPageEvent> *event = [[NLDDataEntity<NLDPageEvent> alloc] initWithProtocol:@protocol(NLDPageEvent)];
     event.eventName = NLDEventDestoryController;
@@ -813,6 +825,7 @@
     [self.eventCache addEvent:event];
     
     LDECLog(@"收集到事件名：%@ \n 参数信息：%@", event.eventName, [event toDictionary]);
+     */
 }
 
 /// NLDNotificationAppInstallList
@@ -850,6 +863,46 @@
 }
 
 #pragma mark - Helper
+
+- (void)uploadImageWithController:(UIViewController *)currentVC imageName:(NSString *)imageName
+{
+    if (!imageName) {
+        return;
+    }
+    
+    // 过滤一些没有意义的页面
+    NSArray *filterPages = @[@"UIAlertController", @"UIInputWindowController", @"UICompatibilityInputViewController",@"UIApplicationRotationFollowingController",@"_UIRemoteInputViewController",@"UIKeyboardCandidateGridCollectionViewController",@"UIApplicationRotationFollowingControllerNoTouches",@"SVViewGatherController",@"SVMainViewController"];
+    
+    if ([filterPages containsObject:imageName] ||
+        [currentVC isKindOfClass:[UINavigationController class]] ||
+        [currentVC isKindOfClass:[UITabBarController class]]) {
+        return;
+    }
+    
+    // 1.如果未开启自动上传，则先判断是否已经上传
+    if (![NLDImageUploader sharedUploader].isEnableUpload) {
+        if ([[NLDRemotePageService defaultService] isAlreadyUploadPage:imageName]) {
+            return;
+        }
+    }
+    
+    // 获取截图并上传
+    __block UIImage *screenImage = nil;
+    __block NSString *parentVC = nil;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        // 2.判断是否是 childViewController
+        if ([currentVC isChildViewController]) {
+            screenImage = [currentVC currentPageScreenShot];
+            parentVC = NSStringFromClass([currentVC.parentViewController class]);
+        } else {
+            screenImage = [UIViewController screenShotForWindow:[UIApplication sharedApplication].keyWindow];
+        }
+    });
+    if (screenImage) {
+        // 3.将parentVC传给后台
+        [[NLDImageUploader sharedUploader] uploadImage:screenImage fileName:imageName parentVC:parentVC type:NLDAutoScreenshot];
+    }
+}
 
 - (NSArray *)addionInfoArrayWithDict:(NSDictionary<NSString *, NSString *> *)dict
 {
