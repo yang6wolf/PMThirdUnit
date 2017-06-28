@@ -53,7 +53,9 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "NFBManager.h"
 #import "LDGeminiSDK.h"
 
+#import "NLDImageUploader.h"
 #import "UIViewController+NLDAdditionalInfo.h"
+#import "UIViewController+NLDInternalMethod.h"
 
 //#import "CocoaAsyncSocket.h"
 //#import "MobileAnalysis.h"
