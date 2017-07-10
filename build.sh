@@ -16,5 +16,5 @@ lipo -create Frameworks/autobuild-simulator Frameworks/autobuild-iphone -output 
 mv Frameworks/PMThirdUnit Frameworks/PMThirdUnit.framework/
 
 rm Frameworks/autobuild-*
-rm -rf Frameworks/PMThirdUnit.framework.dSYM/
+#rm -rf Frameworks/PMThirdUnit.framework.dSYM/
 
