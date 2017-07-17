@@ -14,7 +14,7 @@ fi
 #Check podspec
 filename=$(find . -depth 1 -name *.podspec)
 filecontent=$(cat $filename)
-location=$(echo "$filecontent" |grep \"$ver\")
+location=$(echo "$filecontent" |grep $ver)
 location=$(expr "$location" : ".*[\",\']\(.*\)[\",\']")
 if [ "$location" != "$ver" ]; then
   echo "\033[31mCan not find $ver in podspec!\033[0m"
