@@ -3,6 +3,8 @@ source 'https://git.ms.netease.com/commonlibraryios/podspec.git'
 source 'https://git.ms.netease.com/neteaselottery/ldcpspecs.git'
 source 'https://git.ms.netease.com/preciousmetals/ldpmspecs.git'
 
+# specify the deployment target
+platform :ios, '8.0'
 
 target 'PMThirdUnit' do
   pod 'AFNetworking', '~> 3.0'
@@ -17,7 +19,6 @@ target 'PMThirdUnit' do
   pod 'PBJVision', '0.4.0' #版本号不要改动
   pod 'KVOController'
 
-  pod 'MobileAnalysis', '~> 1.3.5'
   pod 'NTFeedBack', :inhibit_warnings => true
   pod 'MKAdditions', '0.1.1'
   pod 'KeychainWrapper', '~> 0.1.1'
