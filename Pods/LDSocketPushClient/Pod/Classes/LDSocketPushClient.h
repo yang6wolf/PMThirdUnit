@@ -65,5 +65,6 @@ extern NSString *const LDSPClientStatusChangedNotification;
 
 - (void)addErrorObserver:(id)observer usingBlock:(void (^)(NSError *error))block;
 - (void)removeErrorObserver:(id)observer;
+- (void)printDebugLog:(BOOL)debug;
 
 @end

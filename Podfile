@@ -31,7 +31,7 @@ target 'PMThirdUnit' do
   pod 'LDEventCollection', '~> 0.3.1'
   pod 'LDGeminiSDK', '~> 0.1.0'
   pod 'LDMediator', '~> 0.1.0'
-  pod 'LDSocketPushClient', '0.5.2'
+  pod 'LDSocketPushClient', '0.5.3'
 
   pod 'CPFoundationCategory', '~> 0.1.1'
   pod 'libqrencode' #LDShare 需要依赖本库

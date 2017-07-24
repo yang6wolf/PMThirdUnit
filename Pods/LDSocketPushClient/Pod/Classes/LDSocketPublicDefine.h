@@ -13,11 +13,12 @@
 #define LDSocketPushDEBUG 0
 #endif
 
-#if LDSocketPushDEBUG
-#define LDSPLog(...) NSLog(@"LDSP: %@", [NSString stringWithFormat:__VA_ARGS__])
-#else
-#define LDSPLog(...) {}
-#endif
+static BOOL LDSP_debugLog = NO;
+
+#define LDSPLog(...) \
+if(LDSP_debugLog) {\
+NSLog(@"LDSP: %@", [NSString stringWithFormat:__VA_ARGS__]);\
+}
 
 typedef NS_ENUM(NSInteger, LDSocketPushType)
 {

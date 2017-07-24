@@ -515,8 +515,17 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
             {
                 LDSPLog(@"received server ret message");
                 NSData *responseData = [data subdataWithRange:NSMakeRange(bodyOffset, data.length - bodyOffset)];
-                RetMsg *msg = [RetMsg parseFromData:responseData];
+                RetMsg *msg;
                 
+                //添加数据异常上报
+                @try {
+                    msg = [RetMsg parseFromData:responseData];
+                } @catch (NSException *exception) {
+                    NSDictionary *dic = [NSDictionary dictionaryWithObject:[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] forKey:@"responseData"];
+                    NSString *exceptionName = exception.name;
+                    NSString *exceptionReasion = exception.reason;
+                    @throw [NSException exceptionWithName:exceptionName reason:exceptionReasion userInfo:dic];
+                }
                 LDSPMessage *message = [LDSPMessage new];
                 
                 if (msg.hasBody) {
@@ -529,7 +538,7 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
                 
                 [self dispatchMessage:message];
                 
-                LDSPLog(@"received server ret message,topic:%@,body:%@",message.topic,message.body);
+                LDSPLog(@"received server ret message,topic:%@,body:%@",message.topic,[[NSString alloc] initWithData:message.body encoding:NSUTF8StringEncoding]);
             }
                 break;
                 
@@ -690,6 +699,12 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     Subscribe *unsubscribe = [builder build];
     
     [self sendProtoMessage:unsubscribe type:LDSPMessageTypeSubscribeTopic  tag:unsubscribe.requestId];
+}
+
+- (void)printDebugLog:(BOOL)debug
+{
+    //打印debug信息
+    LDSP_debugLog = debug;
 }
 
 #pragma mark - 心跳
