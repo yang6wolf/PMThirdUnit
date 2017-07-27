@@ -1,5 +1,5 @@
-ProjectName=$(find . -depth 1 -name "*.xcodeproj")
-ProjectName=$(expr "$ProjectName" : "./\(.*\).xcodeproj")
+ProjectName=$(find . -depth 1 -name "*.xcworkspace")
+ProjectName=$(expr "$ProjectName" : "./\(.*\).xcworkspace")
 
 if [ -z "$ProjectName" ]; then
   echo "\033[31mCan not locate project file!!!\033[0m"
