@@ -280,10 +280,14 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
 
 - (void)handleReachabilityChangedNotification:(NSNotification *)notification
 {
-    if ([self.reachabilityNotifier currentReachabilityStatus] != NotReachable) {
-        [self restoreConnection];
-    } else {
-        [self disConnect];
+    id notiObj = notification.object;
+    if (!notiObj || ![notiObj isKindOfClass:[Reachability class]]) return;
+    if (self.reachabilityNotifier == (Reachability *)notiObj) {
+        if ([self.reachabilityNotifier currentReachabilityStatus] != NotReachable) {
+            [self restoreConnection];
+        } else {
+            [self disConnect];
+        }
     }
 }
 
@@ -521,10 +525,13 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
                 @try {
                     msg = [RetMsg parseFromData:responseData];
                 } @catch (NSException *exception) {
-                    NSDictionary *dic = [NSDictionary dictionaryWithObject:[[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding] forKey:@"responseData"];
+                    NSString *hexDataString = [self convertDataToHexStr:data];
+                    NSString *hexResponseDataString = [self convertDataToHexStr:responseData];
+                    
                     NSString *exceptionName = exception.name;
-                    NSString *exceptionReasion = exception.reason;
-                    @throw [NSException exceptionWithName:exceptionName reason:exceptionReasion userInfo:dic];
+                    NSString *dataAndResponse = [NSString stringWithFormat:@"data.length:%@,data:%@ ,responseData:%@",@(data.length),hexDataString,hexResponseDataString];
+                    NSString *exceptionReasion = [exception.reason stringByAppendingString:dataAndResponse];
+                    @throw [NSException exceptionWithName:exceptionName reason:exceptionReasion userInfo:nil];
                 }
                 LDSPMessage *message = [LDSPMessage new];
                 
@@ -551,6 +558,57 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     } else {
         LDSPLog(@"bad message,illegal length");
     }
+}
+
+//NSData -> Hex
+- (NSString *)convertDataToHexStr:(NSData *)data {
+    if (!data || [data length] == 0) {
+        return @"";
+    }
+    NSMutableString *string = [[NSMutableString alloc] initWithCapacity:[data length]];
+    
+    [data enumerateByteRangesUsingBlock:^(const void *bytes, NSRange byteRange, BOOL *stop) {
+        unsigned char *dataBytes = (unsigned char*)bytes;
+        for (NSInteger i = 0; i < byteRange.length; i++) {
+            NSString *hexStr = [NSString stringWithFormat:@"%x", (dataBytes[i]) & 0xff];
+            if ([hexStr length] == 2) {
+                [string appendString:hexStr];
+            } else {
+                [string appendFormat:@"0%@", hexStr];
+            }
+        }
+    }];
+    
+    return string;
+}
+
+// Hex -> NSData
+- (NSData *)convertHexStrToData:(NSString *)str {
+    if (!str || [str length] == 0) {
+        return nil;
+    }
+    
+    NSMutableData *hexData = [[NSMutableData alloc] initWithCapacity:8];
+    NSRange range;
+    if ([str length] % 2 == 0) {
+        range = NSMakeRange(0, 2);
+    } else {
+        range = NSMakeRange(0, 1);
+    }
+    for (NSInteger i = range.location; i < [str length]; i += 2) {
+        unsigned int anInt;
+        NSString *hexCharStr = [str substringWithRange:range];
+        NSScanner *scanner = [[NSScanner alloc] initWithString:hexCharStr];
+        
+        [scanner scanHexInt:&anInt];
+        NSData *entity = [[NSData alloc] initWithBytes:&anInt length:1];
+        [hexData appendData:entity];
+        
+        range.location += range.length;
+        range.length = 2;
+    }
+    
+    return hexData;
 }
 
 - (void)dispatchMessage:(LDSPMessage *)message
