@@ -191,6 +191,7 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     self.host = nil;
     self.port = 0;
     self.productCode = 0;
+    self.buffer = nil;    //重置buffer为初始状态
 }
 
 #pragma mark - 连接建立与断开
@@ -341,6 +342,10 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
 {
     LDSPLog(@"connected。\n connected host:%@ \n connected port:%@ \n local host:%@ \n local port:%@ \n",sock.connectedHost,@(sock.connectedPort),sock.localHost,@(sock.localPort));
     
+    if ([self.delegate respondsToSelector:@selector(socketClient:didConnectToHost:port:)]) {
+        [self.delegate socketClient:self didConnectToHost:host port:port];
+    }
+    
     self.status = LDSPClientStatusConnected;
     [self restoreConnection];
 }
@@ -348,6 +353,10 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     LDSPLog(@"disconnected error:%@", err);
+    
+    if ([self.delegate respondsToSelector:@selector(socketClient:didDisconnectWithError:)]) {
+        [self.delegate socketClient:self didDisconnectWithError:err];
+    }
     
     if (err) {
         [self handleDisconnetErrorRetry];
@@ -362,6 +371,14 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     [self dispatchError:error];
 }
 
+/**
+ *   例 data  00000007010108bd161001
+ *   前4个字节内容表示消息长度   00000007   消息长度 = 7  （消息类型长度 + 消息长度）
+ *   中间两个字节消息类型       0101       长连接响应
+ *   后面为消息内容            08bd161001 具体消息内容
+ *
+ */
+
 - (void)socket:(GCDAsyncSocket *)sock didReadData:(NSData *)data withTag:(long)tag
 {
     if (self.buffer) {
@@ -372,28 +389,30 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     NSUInteger bodyOffset = kLDSPMessageLengthWidth + kLDSPProtoBufTypeWidth;
     if (data.length > bodyOffset) {
         char lengthData[kLDSPMessageLengthWidth];
-        [data getBytes:lengthData length:kLDSPMessageLengthWidth];
+        [data getBytes:lengthData length:kLDSPMessageLengthWidth];  //data 前4个字节内容
         uint32_t messageLength = *((uint32_t *)(lengthData));
-        messageLength = CFSwapInt32BigToHost(messageLength);
+        messageLength = CFSwapInt32BigToHost(messageLength);        //大小端转换，转化获取消息长度
         messageLength += kLDSPMessageLengthWidth;
         
-        if (data.length == messageLength) {
+        if (data.length == messageLength) {                         //一个数据包只包含一条message
             [self handleRawMessage:data withTag:tag];
             self.buffer = nil;
             [self.socket readDataWithTimeout:-1 tag:0];
-        } else if (data.length > messageLength) {
+        } else if (data.length > messageLength) {                   //一个数据包含多条message
             NSUInteger remainLength = data.length - messageLength;
             NSData *remainData = [data subdataWithRange:NSMakeRange(messageLength, remainLength)];
             [self handleRawMessage:[data subdataWithRange:NSMakeRange(0, messageLength)] withTag:tag];
             self.buffer = nil;
-            [self socket:sock didReadData:remainData withTag:tag];//防止死循环？
+            [self socket:sock didReadData:remainData withTag:tag];  // 重新处理剩余message内容
         } else {
+            //message内容不全，存buffer，等待下一个数据包回来进行拼接
             if (!self.buffer) {
                 self.buffer = [data mutableCopy];
             }
             NSUInteger remainLength = messageLength - data.length;
             NSMutableData *buffer = [data mutableCopy]; //直接用 self.buffer ?
             NSUInteger maxLength = remainLength;
+            //不超时（timeout = -1不超时）监听数据，socket有可用数据，会拼接到buffer，
             [self.socket readDataWithTimeout:-1 buffer:buffer bufferOffset:data.length maxLength:maxLength tag:0];
         }
     } else {
@@ -719,7 +738,11 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     LDSPOperation *operation = [[LDSPOperation alloc] initWithMessage:subscribe tag:subscribe.requestId];
     self.operationDic[@(subscribe.requestId)] = operation;
     
-    [self sendProtoMessage:subscribe type:LDSPMessageTypeSubscribeTopic tag:subscribe.requestId];
+    if ([self sendProtoMessage:subscribe type:LDSPMessageTypeSubscribeTopic tag:subscribe.requestId]) {
+        if ([self.delegate respondsToSelector:@selector(socketClient:didSubscribeTopic:)]) {
+            [self.delegate socketClient:self didSubscribeTopic:[topic copy]];
+        }
+    }
 }
 
 - (PushType)typeWithOCType:(LDSocketPushType)ocType
@@ -756,7 +779,11 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     [builder setPushType:pushType];
     Subscribe *unsubscribe = [builder build];
     
-    [self sendProtoMessage:unsubscribe type:LDSPMessageTypeSubscribeTopic  tag:unsubscribe.requestId];
+    if ([self sendProtoMessage:unsubscribe type:LDSPMessageTypeSubscribeTopic  tag:unsubscribe.requestId]) {
+        if ([self.delegate respondsToSelector:@selector(socketClient:didUnsubscribeTopic:)]) {
+            [self.delegate socketClient:self didUnsubscribeTopic:[topic copy]];
+        }
+    }
 }
 
 - (void)printDebugLog:(BOOL)debug
@@ -823,7 +850,7 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
 
 #pragma mark - 发送消息
 
-- (void)sendProtoMessage:(id<PBMessage>)message type:(NSInteger)type tag:(long)tag
+- (BOOL)sendProtoMessage:(id<PBMessage>)message type:(NSInteger)type tag:(long)tag
 {
     NSData *msgData = message.data;
     NSInteger messageLength = kLDSPProtoBufTypeWidth + msgData.length;//不包含长度4个字节
@@ -847,7 +874,9 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
         LDSPLog(@"send data with tag:%@",@(tag));
     } else {
         LDSPLog(@"message too long");
+        return NO;
     }
+    return YES;
 }
 
 #pragma mark - 错误分发
