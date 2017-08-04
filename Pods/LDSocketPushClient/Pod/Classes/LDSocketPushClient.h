@@ -22,6 +22,12 @@ extern NSString *const LDSPClientStatusChangedNotification;
 - (void)socketClient:(LDSocketPushClient *)client fetchSocketPushTokenWithCompletion:(void(^)(NSError *error,NSString *deviceId,NSString *token))completion;
 - (void)socketClient:(LDSocketPushClient *)client fetchSocketNodeWithCompletion:(void(^)(NSError *error, NSString *host, NSString *port))completion;
 
+@optional
+- (void)socketClient:(LDSocketPushClient *)client didConnectToHost:(NSString *)host port:(uint16_t)port;
+- (void)socketClient:(LDSocketPushClient *)client didDisconnectWithError:(NSError *)err;
+- (void)socketClient:(LDSocketPushClient *)client didSubscribeTopic:(NSString *)topic;
+- (void)socketClient:(LDSocketPushClient *)client didUnsubscribeTopic:(NSString *)topic;
+
 @end
 
 @interface LDSocketPushClient : NSObject
