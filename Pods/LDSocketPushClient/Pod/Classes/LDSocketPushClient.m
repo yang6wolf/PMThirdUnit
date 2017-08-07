@@ -272,6 +272,7 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
     self.socket = nil;
     self.status = LDSPClientStatusUnconnected;
     [self stopHeartbeat];
+    self.buffer = nil;
 }
 
 - (void)handleAppWillEnterForegroundNotification:(NSNotification *)notification
@@ -353,6 +354,7 @@ NSString * const LDSocketPushClientErrorDomain = @"LDSocketPushClientErrorDomain
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err
 {
     LDSPLog(@"disconnected error:%@", err);
+    self.buffer = nil;
     
     if ([self.delegate respondsToSelector:@selector(socketClient:didDisconnectWithError:)]) {
         [self.delegate socketClient:self didDisconnectWithError:err];
