@@ -27,7 +27,7 @@
 #define LDGeminiLog(...) {}
 #endif
 
-#define LDGeminiSDKDomain  @"LDGeminiSDK"
+#define LDGeminiSDKDomain  @"com.lede.LDGeminiSDK"
 
 
 #endif /* LDGeminiMacro_h */

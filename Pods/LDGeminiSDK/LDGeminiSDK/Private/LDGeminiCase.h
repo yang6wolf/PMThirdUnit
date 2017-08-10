@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-@interface LDGeminiCase : NSObject
+@interface LDGeminiCase : NSObject<NSCoding>
 
 @property (nonatomic, strong) NSNumber *flag;
 @property (nonatomic, strong) NSString *caseId;

@@ -29,7 +29,7 @@ target 'PMThirdUnit' do
   pod 'LDRoutes', '~> 0.0.1'
   pod 'LDNetDiagnoService', '~> 1.2.5'
   pod 'LDEventCollection', '~> 0.3.1'
-  pod 'LDGeminiSDK', '~> 0.1.0'
+  pod 'LDGeminiSDK', '~> 0.3.1'
   pod 'LDMediator', '~> 0.1.0'
   pod 'LDSocketPushClient', '0.5.6'
 

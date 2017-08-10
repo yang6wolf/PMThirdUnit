@@ -14,9 +14,13 @@
 #import "LDGeminiService.h"
 #import "LDGeminiCase.h"
 #import "LDGeminiMacro.h"
+#import "LDGeminiNetworkInterface.h"
+#import "LDGeminiNetwork+IPAddress.h"
+#import "LDGeminiNetwork+NetworkStatus.h"
 
 static NSString * const LDGeminiDefaultDeviceType   = @"iPhone";
 static NSString * const LDGeminiCaseListKey         = @"LDGeminiCaseListKey";
+static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey";
 
 @interface LDGeminiSDK ()
 
@@ -47,6 +51,10 @@ static NSString * const LDGeminiCaseListKey         = @"LDGeminiCaseListKey";
 // MARK: 基本配置方法
 + (BOOL)setupGeminiWithAppKey:(NSString *)appKey deviceId:(NSString *)deviceId userId:(NSString *)userId {
     return [[self sharedInstance] setupGeminiWithAppKey:appKey deviceId:deviceId userId:userId];
+}
+
++ (void)setBaseUrl:(NSString *)baseUrl {
+    [LDGeminiNetworkInterface setBaseUrl:baseUrl];
 }
 
 + (void)registerCaseWithArray:(NSArray<NSString *> *)caseIdArray {
@@ -182,13 +190,31 @@ static NSString * const LDGeminiCaseListKey         = @"LDGeminiCaseListKey";
     NSDictionary *cache = self.cache;
     NSArray *caseList = cache[LDGeminiCaseListKey];
     id ret = defaultFlag;
-    for (LDGeminiCase *caseInstance in caseList) {
-        if (![caseInstance isKindOfClass:[LDGeminiCase class]]) {
-            continue;
+    if (cache) {
+        for (LDGeminiCase *caseInstance in caseList) {
+            if (![caseInstance isKindOfClass:[LDGeminiCase class]]) {
+                continue;
+            }
+            if ([caseInstance.caseId isEqualToString:caseId]) {
+                ret = caseInstance.flag;
+                break;
+            }
         }
-        if ([caseInstance.caseId isEqualToString:caseId]) {
-            ret = caseInstance.flag;
-            break;
+    } else {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:LDGeminiLocalCaselistKey];
+        NSDictionary *localCache = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        caseList = localCache[LDGeminiCaseListKey];
+        if (caseList) {
+            self.cache = localCache;
+        }
+        for (LDGeminiCase *caseInstance in caseList) {
+            if (![caseInstance isKindOfClass:[LDGeminiCase class]]) {
+                continue;
+            }
+            if ([caseInstance.caseId isEqualToString:caseId]) {
+                ret = caseInstance.flag;
+                break;
+            }
         }
     }
     return ret;
@@ -304,6 +330,9 @@ static NSString * const LDGeminiCaseListKey         = @"LDGeminiCaseListKey";
 // MARK: getter & setter
 - (void)setCache:(NSDictionary *)cache {
     _cache = cache;
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cache];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:LDGeminiLocalCaselistKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     if (self.cacheUpdateHandler) {
         self.cacheUpdateHandler();
     }
@@ -362,7 +391,7 @@ static NSString * const LDGeminiCaseListKey         = @"LDGeminiCaseListKey";
 }
 
 - (BOOL)iHasCache {
-    return (self.cache != nil);
+    return (self.cache != nil) || ([[NSUserDefaults standardUserDefaults] objectForKey:LDGeminiLocalCaselistKey] != nil);
 }
 
 - (void)iRegisterCaseWithArray:(NSArray *)caseIdArray {
