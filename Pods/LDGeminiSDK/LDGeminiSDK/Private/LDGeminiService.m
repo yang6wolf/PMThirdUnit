@@ -9,11 +9,10 @@
 #import "LDGeminiService.h"
 #import "LDGeminiCase.h"
 #import "LDGeminiConfig.h"
-#import "LDGeminiNetwork+NSURLSession.h"
 #import "LDGeminiCase.h"
+#import "LDGeminiNetwork.h"
 #import "LDGeminiMacro.h"
-
-static NSString * const kQueryUserCaseListUrl = @"http://adc.163.com/ab/interface/case/queryUserCaseList";
+#import "LDGeminiNetworkInterface.h"
 
 @implementation LDGeminiService
 
@@ -29,7 +28,7 @@ static NSString * const kQueryUserCaseListUrl = @"http://adc.163.com/ab/interfac
         return;
     }
     NSDictionary *parameters = [self iAssembleParameterWithConf:config];
-    [LDGeminiNetwork requestDataWithUrl:[self iQueryUserCaseListURLString] parameters:parameters completionHandler:^(LDGeminiNetworkResponse * _Nonnull response) {
+    [LDGeminiNetwork requestDataWithUrl:[LDGeminiNetworkInterface queryUserCaseListUrl] parameters:parameters completionHandler:^(LDGeminiNetworkResponse * _Nonnull response) {
         if (response.error || response.data.length <= 0) {
             handler(nil, response.error);
             return ;
@@ -78,7 +77,7 @@ static NSString * const kQueryUserCaseListUrl = @"http://adc.163.com/ab/interfac
     NSDictionary *parameters = [self iAssembleParameterWithConf:config];
     
     LDGeminiNetworkResponse *response = nil;
-    response = [LDGeminiNetwork syncRequestDataWithUrl:[self iQueryUserCaseListURLString] parameters:parameters timeout:timeout];
+    response = [LDGeminiNetwork syncRequestDataWithUrl:[LDGeminiNetworkInterface queryUserCaseListUrl] parameters:parameters timeout:timeout];
 
     if (response.error || response.data.length <= 0) {
         *error = response.error;
@@ -149,10 +148,6 @@ static NSString * const kQueryUserCaseListUrl = @"http://adc.163.com/ab/interfac
                 };
     }
     return map;
-}
-
-+ (NSString *)iQueryUserCaseListURLString {
-    return kQueryUserCaseListUrl;
 }
 
 @end

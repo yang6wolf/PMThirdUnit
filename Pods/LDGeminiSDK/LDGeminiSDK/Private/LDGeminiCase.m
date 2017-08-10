@@ -65,4 +65,19 @@
     return [dic copy];
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.flag forKey:@"flag"];
+    [aCoder encodeObject:self.caseId forKey:@"caseId"];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        self.flag = [aDecoder decodeObjectForKey:@"flag"];
+        self.caseId = [aDecoder decodeObjectForKey:@"caseId"];
+    }
+    return self;
+}
+
 @end

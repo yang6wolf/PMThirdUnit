@@ -32,6 +32,14 @@ typedef void(^LDGeminiAsyncUpdateHandler)(BOOL success);
                        userId:(nullable NSString *)userId;
 
 /**
+ * @brief   可选方法，设置请求的url的base地址，若不设置，则默认为http://adc.163.com/
+ *          该方法请在SDK启动前完成调用，该方法不会触发SDK启动
+ *
+ * @param   baseUrl     请求的url的base地址
+ */
++ (void)setBaseUrl:(NSString *)baseUrl;
+
+/**
  *  @brief  注册App中启动的合法case（可选）。
  *
  *  @param  caseIdArray 向SDK注册合法的caseId的数组，只接受NSString类型的值，其他类型的值将被抛弃
