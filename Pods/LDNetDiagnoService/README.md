@@ -116,3 +116,10 @@ _netDiagnoService.delegate = self;
 to be continued ....
 
 庞辉, 电商技术中心，popo：__huipang@corp.netease.com__
+
+____________________
+
+# 1.2.6
+1. 增加判断是否诊断网络入口；
+2. 修改了在提前终止诊断时，不会触发诊断结束delegate方法的问题。
+

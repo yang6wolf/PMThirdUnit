@@ -17,6 +17,7 @@ static NSString * const LDGeminiSignConfigAttributeName         = @"LDGeminiSign
 static NSString * const LDGeminiAccessIPConfigAttributeName     = @"LDGeminiAccessIPConfigAttributeName";
 static NSString * const LDGeminiNetTypeConfigAttributeName      = @"LDGeminiNetTypeConfigAttributeName";
 static NSString * const LDGeminiDeviceTypeConfigAttributeName   = @"LDGeminiDeviceTypeConfigAttributeName";
+static NSString * const LDGeminiAppversionConfigAttributeName   = @"LDGeminiAppversionConfigAttributeName";
 
 //static NSString * const LDGeminiSignKeyConfigAttributeName      = @"LDGeminiSignKeyConfigAttributeName";
 

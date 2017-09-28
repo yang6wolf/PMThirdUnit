@@ -21,7 +21,13 @@
 #import "Reachability.h"
 
 #if TARGET_IPHONE_SIMULATOR
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 110000 //iOS11，用数字不用宏定义的原因是低版本XCode不支持110000的宏定义
 #include <net/route.h>
+#else
+#include "Route.h"
+#endif
+
 #else
 #include "Route.h"
 #endif /*the very same from google-code*/

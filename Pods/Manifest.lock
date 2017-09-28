@@ -32,9 +32,9 @@ PODS:
   - LDEventCollection (0.3.1):
     - LDPositioning (~> 0.1.1)
     - ProtocolBuffers
-  - LDGeminiSDK (0.3.1)
+  - LDGeminiSDK (1.0.1)
   - LDMediator (0.1.1)
-  - LDNetDiagnoService (1.2.5):
+  - LDNetDiagnoService (1.2.7):
     - Reachability
   - LDPositioning (0.1.1)
   - LDRemoteCommand (0.0.6):
@@ -80,9 +80,9 @@ DEPENDENCIES:
   - KeychainWrapper (~> 0.1.1)
   - KVOController
   - LDEventCollection (~> 0.3.1)
-  - LDGeminiSDK (~> 0.3.1)
+  - LDGeminiSDK (~> 1.0.1)
   - LDMediator (~> 0.1.0)
-  - LDNetDiagnoService (~> 1.2.5)
+  - LDNetDiagnoService (~> 1.2.7)
   - LDRemoteCommand (~> 0.0.5)
   - LDRoutes (~> 0.0.1)
   - LDSocketPushClient (= 0.5.6)
@@ -107,9 +107,9 @@ SPEC CHECKSUMS:
   KeychainWrapper: 2451abbc8ee4c8a0c7f13e4bf1c21879dc711794
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
   LDEventCollection: 1d3208712a94f8c0ee710545fcd0c065db479137
-  LDGeminiSDK: d1908e247c4e65609e4d139da1fe137e11df4fe7
+  LDGeminiSDK: 49ed632d26da4f234489ff9d332da8f0a9d5e9c0
   LDMediator: 7453ad0afdec638a59a057804af9c6b644263e5a
-  LDNetDiagnoService: 742f5c5df2023d8a46f30a3f7fa1df7401752aa1
+  LDNetDiagnoService: ab4f646897d28fd195159441e226e89c61d06fa9
   LDPositioning: b01c068a257364c856c3b3e01e40e0d5e3642633
   LDRemoteCommand: aef240066d110aeff451a0a4b021ab0f2e59b1b0
   LDRoutes: 97066a1745d57d4a15032357cfe37d8df292dbc7
@@ -125,6 +125,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 62abce501668580092d2be9b6ba7324a3d5f906a
 
-PODFILE CHECKSUM: 1c23ea9fe6f82fb302cd9599767952742efeeb56
+PODFILE CHECKSUM: d1f2c2f1c5af2af9d0ef629bd9a4901d09687984
 
 COCOAPODS: 1.2.1

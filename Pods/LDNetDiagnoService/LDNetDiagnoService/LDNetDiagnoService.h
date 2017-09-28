@@ -82,6 +82,14 @@
 
 
 /**
+ * 判断是否正在诊断网络
+
+ @return YES or NO
+ */
+- (BOOL)checkIfRuningNetDialogsis;
+
+
+/**
  * 打印整体loginInfo；
  */
 - (void)printLogInfo;

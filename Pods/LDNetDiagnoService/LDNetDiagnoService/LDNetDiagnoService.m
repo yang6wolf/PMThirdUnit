@@ -161,6 +161,9 @@ static NSString *const kCheckOutIPURL = @"http://nstool.netease.com/info.js";
                                      toTarget:_traceRouter
                                    withObject:_dormain];
         }
+    } else {
+        // traceRoute是诊断的最后一步
+        [self traceRouteDidEnd];
     }
 }
 
@@ -188,6 +191,11 @@ static NSString *const kCheckOutIPURL = @"http://nstool.netease.com/info.js";
 
         _isRunning = NO;
     }
+}
+
+- (BOOL)checkIfRuningNetDialogsis
+{
+    return _isRunning;
 }
 
 
