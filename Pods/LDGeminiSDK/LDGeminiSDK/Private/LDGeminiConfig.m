@@ -35,7 +35,8 @@
                                  LDGeminiUserIdConfigAttributeName,
                                  LDGeminiTimeStampConfigAttributeName,
                                  LDGeminiDeviceIDConfigAttributeName,
-                                 LDGeminiSignConfigAttributeName];
+                                 LDGeminiSignConfigAttributeName,
+                                 LDGeminiAppversionConfigAttributeName];
 
         _optionalConfigNames = @[LDGeminiAccessIPConfigAttributeName,
                                  LDGeminiNetTypeConfigAttributeName,

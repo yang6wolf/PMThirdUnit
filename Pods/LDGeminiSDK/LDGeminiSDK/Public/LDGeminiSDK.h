@@ -39,14 +39,6 @@ typedef void(^LDGeminiAsyncUpdateHandler)(BOOL success);
  */
 + (void)setBaseUrl:(NSString *)baseUrl;
 
-/**
- *  @brief  注册App中启动的合法case（可选）。
- *
- *  @param  caseIdArray 向SDK注册合法的caseId的数组，只接受NSString类型的值，其他类型的值将被抛弃
- *                      传递的数组为nil: 则SDK中所有的caseId均为已注册的合法caseId
- *                      传递的数组为@[]（元素个数为0的空数组）: 则SDK中所有的caseId均为未注册的非法caseId
- */
-+ (void)registerCaseWithArray:(nullable NSArray<NSString *> *)caseIdArray;
 
 /**
  *  @brief  设置每次SDK，更新本地Cache时的回调block（可通过该接口上报当前使用的case列表）。

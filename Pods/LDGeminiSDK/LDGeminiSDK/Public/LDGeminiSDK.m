@@ -57,10 +57,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     [LDGeminiNetworkInterface setBaseUrl:baseUrl];
 }
 
-+ (void)registerCaseWithArray:(NSArray<NSString *> *)caseIdArray {
-    [[self sharedInstance] registerCaseWithArray:caseIdArray];
-}
-
 + (void)setupCacheUpdateHandler:(LDGeminiCacheUpdateHandler)handler {
     [[self sharedInstance] setupCacheUpdateHandler:handler];
 }
@@ -148,9 +144,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     return self.enableGeminiSDK;
 }
 
-- (void)registerCaseWithArray:(NSArray<NSString *> *)caseIdArray {
-    [self iRegisterCaseWithArray:caseIdArray];
-}
 
 - (void)setupCacheUpdateHandler:(LDGeminiCacheUpdateHandler)handler {
     self.cacheUpdateHandler = handler;
@@ -182,8 +175,7 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
 }
 
 - (id)getFlag:(NSString *)caseId defaultFlag:(id)defaultFlag {
-    if (![self iHasCache] ||
-        ![self iRegisteredCaseId:caseId]) {
+    if (![self iHasCache]) {
         return defaultFlag;
     }
 
@@ -247,10 +239,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     return [self getFlag:caseId defaultFlag:defaultFlag];
 }
 
-// MARK: 辅助方法
-- (BOOL)registeredCase:(NSString *)caseId {
-    return [self iRegisteredCaseId:caseId];
-}
 
 - (NSArray *)currentCaseIdList {
     if (![self iHasCache]) {
@@ -261,9 +249,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     NSMutableArray *ret = [[NSMutableArray alloc] initWithCapacity:[caseList count]];
     for (LDGeminiCase *caseInstance in caseList) {
         if (![caseInstance isKindOfClass:[LDGeminiCase class]]) {
-            continue;
-        }
-        if (![self iRegisteredCaseId:caseInstance.caseId]) {
             continue;
         }
         [ret addObject:caseInstance.caseId];
@@ -278,10 +263,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     
     for (LDGeminiCase *caseInstance in caseList) {
         if (![caseInstance isKindOfClass:[LDGeminiCase class]]) {
-            continue;
-        }
-        if (![self iRegisteredCaseId:caseInstance.caseId]) {
-            // 未注册测caseid
             continue;
         }
         [list addObject:[caseInstance toDictionary]];
@@ -333,9 +314,6 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:cache];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:LDGeminiLocalCaselistKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    if (self.cacheUpdateHandler) {
-        self.cacheUpdateHandler();
-    }
 }
 
 // MARK: 自定义私有方法
@@ -378,6 +356,7 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
     deviceId = deviceId ? : @"";
     NSString *signKey = LDGeminiSignKey;
 
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *sign = [NSString geminiMD5WithArray:@[deviceId, appKey, timeStamp, userId, signKey]];
     [_config refreshConfig:@{
                               LDGeminiAppKeyConfigAttributeName : appKey,
@@ -386,48 +365,13 @@ static NSString * const LDGeminiLocalCaselistKey    = @"LDGeminiLocalCaselistKey
                               LDGeminiDeviceIDConfigAttributeName : deviceId,
                               LDGeminiSignConfigAttributeName : sign,
                               LDGeminiDeviceTypeConfigAttributeName : LDGeminiDefaultDeviceType,
+                              LDGeminiAppversionConfigAttributeName : version
                               }];
     
 }
 
 - (BOOL)iHasCache {
     return (self.cache != nil) || ([[NSUserDefaults standardUserDefaults] objectForKey:LDGeminiLocalCaselistKey] != nil);
-}
-
-- (void)iRegisterCaseWithArray:(NSArray *)caseIdArray {
-    if (!caseIdArray) {
-        _registeredCaseIds = nil;
-        return ;
-    }
-    if (![caseIdArray isKindOfClass:[NSArray class]]) {
-        return ;
-    }
-    
-    NSMutableArray *muArray = [[NSMutableArray alloc] initWithCapacity:[caseIdArray count]];
-    for (id string in caseIdArray) {
-        if (![string isKindOfClass:[NSString class]]) {
-            continue;
-        }
-        [muArray addObject:[string copy]];
-    }
-    _registeredCaseIds = [muArray copy];
-}
-
-- (BOOL)iRegisteredCaseId:(NSString *)caseId {
-    if (!caseId) {
-        return NO;
-    }
-    if (!self.registeredCaseIds) {
-        return YES;
-    }
-    BOOL registered = NO;
-    for (NSString *registeredCaseId in self.registeredCaseIds) {
-        if ([registeredCaseId isEqualToString:caseId]) {
-            registered = YES;
-            break;
-        }
-    }
-    return registered;
 }
 
 - (void)iAppWillEnterForeground:(NSNotification *)notification {

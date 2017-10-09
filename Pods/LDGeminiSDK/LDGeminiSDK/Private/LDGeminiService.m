@@ -128,7 +128,7 @@
         }
         parameter[parameterKey] = [conf getConfig:key];
     }
-
+    
     return [parameter copy];
 }
 
@@ -141,6 +141,7 @@
                 LDGeminiTimeStampConfigAttributeName : @"timestamp",
                 LDGeminiDeviceIDConfigAttributeName : @"deviceId",
                 LDGeminiSignConfigAttributeName : @"sign",
+                LDGeminiAppversionConfigAttributeName : @"version",
 
                 LDGeminiAccessIPConfigAttributeName : @"accessIp",
                 LDGeminiNetTypeConfigAttributeName : @"netType",
