@@ -41,11 +41,6 @@ PODS:
     - LDNetDiagnoService (~> 1.2.0)
   - LDRoutes (0.0.3):
     - JLRoutes (~> 1.5.1)
-  - LDSocketPushClient (0.5.6):
-    - CocoaAsyncSocket (~> 7.4.3)
-    - MSWeakTimer (~> 1.1.0)
-    - ProtocolBuffers
-    - Reachability
   - libqrencode (3.4.2)
   - Mantle (2.0.7):
     - Mantle/extobjc (= 2.0.7)
@@ -85,7 +80,6 @@ DEPENDENCIES:
   - LDNetDiagnoService (~> 1.2.7)
   - LDRemoteCommand (~> 0.0.5)
   - LDRoutes (~> 0.0.1)
-  - LDSocketPushClient (= 0.5.6)
   - libqrencode
   - Mantle (= 2.0.7)
   - MKAdditions (= 0.1.1)
@@ -113,7 +107,6 @@ SPEC CHECKSUMS:
   LDPositioning: b01c068a257364c856c3b3e01e40e0d5e3642633
   LDRemoteCommand: aef240066d110aeff451a0a4b021ab0f2e59b1b0
   LDRoutes: 97066a1745d57d4a15032357cfe37d8df292dbc7
-  LDSocketPushClient: a0a9723c346d4206e28fa5a17c9cc0c452546b15
   libqrencode: 43dc34b89af83ea4b07c409cd8e09c87aa3a1c9f
   Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MKAdditions: 7c68a408ad6795e20eecd6920592002781e0ef61
@@ -125,6 +118,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 2627602ad6818451f0cb8c2a6e072f7f10a5f360
 
-PODFILE CHECKSUM: 9a86ef69fb52672adb04a0ac8d817e58eeadcf31
+PODFILE CHECKSUM: c883efa6cf413500afe0f30299351ea8bf7673a4
 
 COCOAPODS: 1.3.1
