@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "JSONKit.h"
 #import "Mantle.h"
 #import "Realm.h"
-#import "Aspects.h"
 #import "ECLaunch.h"
 #import "Reachability.h"
 #import "ReactiveCocoa.h"
@@ -34,8 +33,6 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 
 #import "LDRoutes.h"
 #import "LDMediator.h"
-#import "LDSPMessage.h"
-#import "LDSocketPushClient.h"
 #import "KeychainWrapper.h"
 #import "NLDEventCollectionManager.h"
 #import "UIAlertView+MKBlockAdditions.h"
