@@ -52,6 +52,9 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "UIViewController+NLDAdditionalInfo.h"
 #import "UIViewController+NLDInternalMethod.h"
 
+#import "ProtocolBuffers.h"
+#import "GCDAsyncSocket.h"
+
 //#import "CocoaAsyncSocket.h"
 //#import "MobileAnalysis.h"
 //#import "NTFeedBack.h"
