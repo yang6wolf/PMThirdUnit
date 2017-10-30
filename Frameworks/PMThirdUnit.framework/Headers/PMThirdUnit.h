@@ -54,6 +54,7 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 
 #import "ProtocolBuffers.h"
 #import "GCDAsyncSocket.h"
+#import "AsyncSocket.h"
 
 //#import "CocoaAsyncSocket.h"
 //#import "MobileAnalysis.h"
