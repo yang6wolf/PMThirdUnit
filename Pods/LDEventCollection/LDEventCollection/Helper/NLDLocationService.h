@@ -20,6 +20,8 @@ extern NSString * const NLDNotificationLocationUpload;
 
 - (void)startUpdateLocationWithCompletionHandler:(void(^)(NSString *longitude, NSString *latitude, NSString *altitude))completionBlock;
 
+- (void)uploadCurrentLoacation;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -147,6 +147,11 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
     [[NLDLocationService sharedService] setEnableLocation:isEnable];
 }
 
+- (void)uploadCurrentLoacation
+{
+    [[NLDLocationService sharedService] uploadCurrentLoacation];
+}
+
 - (void)setEnablePageUpload:(BOOL)isEnable
 {
     [[NLDImageUploader sharedUploader] setEnableUpload:isEnable];

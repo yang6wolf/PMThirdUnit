@@ -177,9 +177,11 @@
 - (void)handleLocationUpload:(NSNotification *)notification
 {
     // 获取位置信息
-    [[NLDLocationService sharedService] startUpdateLocationWithCompletionHandler:^(NSString * _Nonnull longitude, NSString * _Nonnull latitude, NSString * _Nonnull altitude) {
-        [self addLocationEventWithLongitude:longitude latitude:latitude altitude:altitude];
-    }];
+    if ([NLDLocationService sharedService].isEnableLocation) {
+        [[NLDLocationService sharedService] startUpdateLocationWithCompletionHandler:^(NSString * _Nonnull longitude, NSString * _Nonnull latitude, NSString * _Nonnull altitude) {
+            [self addLocationEventWithLongitude:longitude latitude:latitude altitude:altitude];
+        }];
+    }
 }
 
 - (void)handleAppDidFinishLaunching:(NSNotification *)notification

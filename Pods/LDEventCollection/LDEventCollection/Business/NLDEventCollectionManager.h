@@ -75,6 +75,12 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
 - (void)setEnableLocationUpload:(BOOL)isEnable;
 
 /**
+ *  触发SDK立即进行定位并上报位置
+ *  需要先通过 setEnableLocationUpload: 开启SDK的定位功能，否则不做任何处理
+ */
+- (void)uploadCurrentLoacation;
+
+/**
  *  设置作为页面的子VC，由用研人员指定哪些子VC当做独立页面
  *  业务方在集成时，需要如下 2 步操作：
  *  1.首先通过接口：http://data.ms.netease.com/view/page/list?appkey=gold_lede_ios&filter=true 获取子VC配置列表，可以在浏览器中执行请求即可。注意，url中的appkey的值根据各产品修改成相应的值。
