@@ -55,7 +55,7 @@ NLDNotificationNameDefine(NLDNotificationLocationUpload)
             }
             
             // 自动触发一次定位，模拟冷启动
-            [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationLocationUpload object:nil userInfo:nil];
+            [self uploadCurrentLoacation];
         }
     }
 }
@@ -64,6 +64,11 @@ NLDNotificationNameDefine(NLDNotificationLocationUpload)
 {
     [self.locationManager startUpdatingLocation];
     self.completionHandler = completionBlock;
+}
+
+- (void)uploadCurrentLoacation
+{
+    [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationLocationUpload object:nil userInfo:nil];
 }
 
 #pragma mark - CLLocationManagerDelegate

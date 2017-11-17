@@ -28,7 +28,7 @@ PODS:
   - JSONKit-NoWarning (1.2)
   - KeychainWrapper (0.1.2)
   - KVOController (1.2.0)
-  - LDEventCollection (0.3.1):
+  - LDEventCollection (0.3.3):
     - LDPositioning (~> 0.1.1)
     - ProtocolBuffers
   - LDGeminiSDK (1.0.1)
@@ -72,7 +72,7 @@ DEPENDENCIES:
   - JSONKit-NoWarning (~> 1.2)
   - KeychainWrapper (~> 0.1.1)
   - KVOController
-  - LDEventCollection (~> 0.3.1)
+  - LDEventCollection (~> 0.3.3)
   - LDGeminiSDK (~> 1.0.1)
   - LDMediator (~> 0.1.0)
   - LDNetDiagnoService (~> 1.2.7)
@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   KeychainWrapper: 2451abbc8ee4c8a0c7f13e4bf1c21879dc711794
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
-  LDEventCollection: 1d3208712a94f8c0ee710545fcd0c065db479137
+  LDEventCollection: eebef40854aec78ec182eebb7d67786ce6db23a1
   LDGeminiSDK: 49ed632d26da4f234489ff9d332da8f0a9d5e9c0
   LDMediator: 7453ad0afdec638a59a057804af9c6b644263e5a
   LDNetDiagnoService: ab4f646897d28fd195159441e226e89c61d06fa9
@@ -115,6 +115,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 2627602ad6818451f0cb8c2a6e072f7f10a5f360
 
-PODFILE CHECKSUM: 31925081e662777dc1c495de751a5f3aefc66bf1
+PODFILE CHECKSUM: 23fdb8130fa28df663e47428c0d2df6f663d0dbb
 
 COCOAPODS: 1.3.1

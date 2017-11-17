@@ -87,9 +87,11 @@
     
     // 获取截图并上传
     __block UIImage *screenImage = nil;
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        screenImage = [UIViewController screenShotForWindow:[UIApplication sharedApplication].keyWindow];
-    });
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            screenImage = [UIViewController screenShotForWindow:[UIApplication sharedApplication].keyWindow];
+        });
+    }
     if (screenImage) {
         [[NLDImageUploader sharedUploader] uploadImage:screenImage fileName:_lastComponentName type:NLDAutoScreenshot];
         _lastComponentName = imageName;

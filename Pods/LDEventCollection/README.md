@@ -189,6 +189,14 @@ iOS 8 and Later
 最好在viewDidLoad方法执行前设置好！！！
 
 ## Version
+* 0.3.3
+
+    * 修复在 RN 中出现的Crash；
+
+* 0.3.2
+
+    * 增加主动定位及上报地理位置的接口；
+
 * 0.3.1
 
     * 修复 viewPath 获取错误的Bug；
