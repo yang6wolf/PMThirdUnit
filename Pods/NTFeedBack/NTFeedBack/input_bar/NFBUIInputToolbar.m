@@ -85,10 +85,15 @@
     self.image =  [[NFBAppearanceProxy sharedAppearance] toolBarBackgroundImage];
     self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleRightMargin;
     
+    UIEdgeInsets safearea = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safearea = self.safeAreaInsets;
+    }
+    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:@"发送" forState:UIControlStateNormal];
     [button setBackgroundImage:[[NFBAppearanceProxy sharedAppearance] toolBarConfirmButtonImage] forState:UIControlStateNormal];
-    button.frame = CGRectMake(SCREEN_WIDTH - 65, 7, 60, 30);
+    button.frame = CGRectMake(SCREEN_WIDTH - 65, 7 - safearea.bottom, 60, 30);
     [button addTarget:self action:@selector(inputButtonPressed) forControlEvents:UIControlEventTouchDown];
     inputButton = button;
     [self addSubview:button];
@@ -102,7 +107,7 @@
     
     UIImageView *inputBackgroundImgV = [[UIImageView alloc] initWithFrame:CGRectMake(70, 5, SCREEN_WIDTH - 140, 34)];
     inputBackgroundImgV.image = [[NFBAppearanceProxy sharedAppearance] inputFieldImage];
-    inputBackgroundImgV.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    inputBackgroundImgV.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin;
     [self addSubview:inputBackgroundImgV];
     
     
@@ -224,6 +229,18 @@
     self.textInput.textColor = [UIColor lightGrayColor];
     self.textInputStatus = NO;
     [self changeInputHeight:18];
+}
+
+- (void)safeAreaInsetsDidChange {
+    CGRect frame = self.frame;
+    if (UIEdgeInsetsEqualToEdgeInsets(self.safeAreaInsets, UIEdgeInsetsZero)) {
+        frame.size.height = 44;
+    } else {
+        frame.size.height += self.safeAreaInsets.bottom;
+        frame.origin.y -= self.safeAreaInsets.bottom;
+    }
+    self.frame = frame;
+    
 }
 
 
