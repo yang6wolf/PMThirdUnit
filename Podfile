@@ -18,7 +18,7 @@ target 'PMThirdUnit' do
   pod 'PBJVision', '0.4.0' #版本号不要改动
   pod 'KVOController'
 
-  pod 'NTFeedBack', :inhibit_warnings => true
+  pod 'NTFeedBack', :inhibit_warnings => true 
   pod 'MKAdditions', '0.1.1'
   pod 'KeychainWrapper', '~> 0.1.1'
   pod 'CocoaAsyncSocket', '~> 7.4.3'

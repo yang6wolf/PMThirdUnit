@@ -93,7 +93,7 @@
 }
 
 - (void)autoReplyQuestionsView:(NFBAutoReplyQuestionsView*)questionView selectQuestion:(NSUInteger)index {
-    if ([self.questions[index] isEqualToString:kMoreQuestion]) {
+    if ([self.questions[index] isKindOfClass:[NSString class]] && [self.questions[index] isEqualToString:kMoreQuestion]) {
         [self.delegate messageCell:self didOpenLink:[NFBConfig sharedConfig].helpLink];
     } else {
         [[NFBQequestSession session] sendAutoReplayQuestion:self.questions[index]];
