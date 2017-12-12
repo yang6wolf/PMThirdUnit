@@ -1,6 +1,6 @@
 {
   "name": "NTFeedBack",
-  "version": "3.2.4",
+  "version": "3.2.5",
   "summary": "IOS客服模块",
   "homepage": "https://git.ms.netease.com/commonlibraryios/ntfeedback",
   "license": {
@@ -12,7 +12,7 @@
   },
   "source": {
     "git": "https://git.ms.netease.com/commonlibraryios/ntfeedback.git",
-    "tag": "3.2.4"
+    "tag": "3.2.5"
   },
   "requires_arc": true,
   "platforms": {
@@ -36,7 +36,7 @@
   ],
   "dependencies": {
     "LDNetDiagnoService": [
-
+      "~> 1.2.7"
     ],
     "AFNetworking": [
       "~> 3.1.0"

@@ -198,7 +198,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.titleView = [NFBUIFactory labelForNavTitle:self.title];
+//    self.navigationItem.titleView = [NFBUIFactory labelForNavTitle:self.title];
 
     [self setupViews];
     [self setupButtons];
@@ -216,7 +216,7 @@
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAllButUpsideDown;
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 
@@ -238,6 +238,7 @@
                                                                             image:nil
                                                                            target:self
                                                                            action:@selector(dismiss:)];
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
 }
 
@@ -570,6 +571,8 @@
     [self setupButtons];
     [self addGestureRecognizer];
     [self resetViews];
+    
+    self.view.tintColor = [UIColor blackColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -577,6 +580,12 @@
     [super viewWillAppear:animated];
     [self setupAssets];
     self.navigationItem.titleView = [NFBUIFactory labelForNavTitle:self.title];
+    self.navigationController.toolbarHidden = NO;
+    if ([UIDevice currentDevice].systemVersion.intValue >=7) {
+        self.navigationController.toolbar.barTintColor = [UIColor blackColor];
+    } else{
+        self.navigationController.toolbar.tintColor = [UIColor blackColor];
+    }
 }
 
 - (void)back
@@ -588,6 +597,7 @@
 {
     [super viewWillDisappear:animated];
     //[self resetIndexPathsOfSelectedItem];
+    self.navigationController.toolbarHidden = YES;
 }
 
 
@@ -607,35 +617,21 @@
 {
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.view.backgroundColor = [UIColor yellowColor];
-    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 44 - 44, self.view.bounds.size.width,  44)];
-    if ([UIDevice currentDevice].systemVersion.intValue >=7) {
-        _toolBar.barTintColor = [UIColor blackColor];
-    } else{
-        _toolBar.tintColor = [UIColor blackColor];
-       
-    }
+//    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - 44 - 44, self.view.bounds.size.width,  44)];
     
-    [self.view addSubview:_toolBar];
+//    [self.view addSubview:_toolBar];
     
     _doneButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 70, 6, 60, 32)];
     [_doneButton setBackgroundImage:[[NFBAppearanceProxy sharedAppearance] toolBarConfirmButtonImage] forState:UIControlStateNormal];
     [_doneButton setTitle:@"发送" forState:UIControlStateNormal];
     [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [_doneButton addTarget:self action:@selector(finishPickingAssets:) forControlEvents:UIControlEventTouchUpInside];
-    [_toolBar addSubview:_doneButton];
+    [_doneButton addTarget:self
+                    action:@selector(finishPickingAssets:)
+          forControlEvents:UIControlEventTouchUpInside];
+    _doneButton.clipsToBounds = NO;
+//    [_toolBar addSubview:_doneButton];
     
-    _backgroundImgV = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 80, 2, 21, 21)];
-    _backgroundImgV.hidden = YES;
-    _backgroundImgV.image = [[NFBAppearanceProxy sharedAppearance] selectedImgsCountBackgroundImg];
-    [_toolBar addSubview:_backgroundImgV];
-    
-    _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 75, 2, 21, 21)];
-    _countLabel.textColor = [UIColor whiteColor];
-    _countLabel.backgroundColor = [UIColor clearColor];
-    _countLabel.hidden = YES;
-    [_toolBar addSubview:_countLabel];
-    
-    _previewButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 60, 32)];
+    _previewButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 6, 55, 32)];
     [_previewButton setTitle:@"预览" forState:UIControlStateNormal];
     [_previewButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     [_previewButton setTitleColor:[UIColor whiteColor] forState:UIControlStateDisabled];
@@ -643,7 +639,63 @@
     [_previewButton setBackgroundImage:[[NFBAppearanceProxy sharedAppearance] imgPickerPreviewDisableImage] forState:UIControlStateDisabled];
     [_previewButton addTarget:self action:@selector(showPrevController) forControlEvents:UIControlEventTouchUpInside];
     _previewButton.enabled = NO;
-    [_toolBar addSubview:_previewButton];
+//    [_toolBar addSubview:_previewButton];
+    
+    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithCustomView:_previewButton],
+                       [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                     target:nil
+                                                                     action:nil],
+                       [[UIBarButtonItem alloc] initWithCustomView:_doneButton]];
+    
+    
+    _backgroundImgV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 21, 21)];
+    _backgroundImgV.hidden = YES;
+    _backgroundImgV.translatesAutoresizingMaskIntoConstraints = NO;
+    _backgroundImgV.image = [[NFBAppearanceProxy sharedAppearance] selectedImgsCountBackgroundImg];
+    [_doneButton addSubview:_backgroundImgV];
+    [NSLayoutConstraint constraintWithItem:_backgroundImgV
+                                 attribute:NSLayoutAttributeCenterX
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_doneButton
+                                 attribute:NSLayoutAttributeLeading
+                                multiplier:1
+                                  constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:_backgroundImgV
+                                 attribute:NSLayoutAttributeCenterY
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:_doneButton
+                                 attribute:NSLayoutAttributeTop
+                                multiplier:1
+                                  constant:0].active = YES;
+    [NSLayoutConstraint constraintWithItem:_backgroundImgV
+                                 attribute:NSLayoutAttributeWidth
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1
+                                  constant:21].active = YES;
+    [NSLayoutConstraint constraintWithItem:_backgroundImgV
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:NSLayoutRelationEqual
+                                    toItem:nil
+                                 attribute:NSLayoutAttributeNotAnAttribute
+                                multiplier:1
+                                  constant:21].active = YES;
+    
+    _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 21, 21)];
+    _countLabel.textColor = [UIColor whiteColor];
+    _countLabel.backgroundColor = [UIColor clearColor];
+    _countLabel.hidden = YES;
+    _countLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [_backgroundImgV addSubview:_countLabel];
+    [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-6-[label]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:@{@"label" : _countLabel}]];
+    [NSLayoutConstraint activateConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[label]|"
+                                                                                    options:0
+                                                                                    metrics:nil
+                                                                                      views:@{@"label" : _countLabel}]];
 }
 
 - (void)setupButtons
@@ -914,6 +966,7 @@
         NSIndexPath *indexPath  = [self.collectionView indexPathForItemAtPoint:point];
         
         LDAssetsPageViewController *vc = [[LDAssetsPageViewController alloc] initWithAssets:self.assets];
+        vc.hidesBottomBarWhenPushed = YES;
         vc.pageIndex = indexPath.item;
         
         [self.navigationController pushViewController:vc animated:YES];
@@ -934,6 +987,7 @@
     
 //    NSIndexPath *indexPath = [self.collectionView indexPathForCell:_selectedCell];
     LDAssetsPageViewController *vc = [[LDAssetsPageViewController alloc] initWithAssets:assets];
+    vc.hidesBottomBarWhenPushed = YES;
     vc.pageIndex = 0;//indexPath.item;
     
     [self.navigationController pushViewController:vc animated:YES];
