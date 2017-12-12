@@ -94,7 +94,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   NTFeedBack:
-    :commit: cf68e2c461e90b896c3d92165e28aefdd5a03b4b
+    :commit: 2df741aa71bf5bed8f0fc54252af364c39447f03
     :git: https://git.ms.netease.com/commonlibraryios/ntfeedback.git
 
 SPEC CHECKSUMS:
