@@ -198,7 +198,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationItem.titleView = [NFBUIFactory labelForNavTitle:self.title];
+    self.navigationItem.titleView = [NFBUIFactory labelForNavTitle:self.title];
 
     [self setupViews];
     [self setupButtons];
@@ -238,7 +238,6 @@
                                                                             image:nil
                                                                            target:self
                                                                            action:@selector(dismiss:)];
-        self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
 }
 
