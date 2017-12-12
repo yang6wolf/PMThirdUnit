@@ -15,7 +15,7 @@
 + (UILabel *)labelForNavTitle:(NSString *)title {
     UILabel *label = [[UILabel alloc] init];
 	[label setFont:[UIFont boldSystemFontOfSize:19]];
-	[label setTextColor:[[NFBAppearanceProxy sharedAppearance] navigationTitleColor]];
+	[label setTextColor:[UIColor darkTextColor]];
 	[label setText:title];
     [label sizeToFit];
 	label.backgroundColor = [UIColor clearColor];
@@ -30,7 +30,7 @@
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[[NFBAppearanceProxy sharedAppearance] navigationButtonTitleColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
     button.titleLabel.font = [[NFBAppearanceProxy sharedAppearance] navigationButtonTitleFont];
     [button setImage:image forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, titleSize.width?:29, 29);
