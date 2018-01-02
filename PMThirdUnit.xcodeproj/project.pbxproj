@@ -164,10 +164,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PMThirdUnit/Pods-PMThirdUnit-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/ECLaunch/ECLaunch.bundle,
-				$PODS_CONFIGURATION_BUILD_DIR/MKAdditions/MKAdditions.bundle,
-				"${PODS_ROOT}/NTFeedBack/NTFeedBack/model/FBMessages.xcdatamodeld",
-				"${PODS_ROOT}/NTFeedBack/NTFeedBack/feedback.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/ECLaunch/ECLaunch.bundle",
+				"$PODS_CONFIGURATION_BUILD_DIR/MKAdditions/MKAdditions.bundle",
 				"${PODS_ROOT}/PBJVision/Source/Shaders/Shader.fsh",
 				"${PODS_ROOT}/PBJVision/Source/Shaders/Shader.vsh",
 			);
@@ -329,7 +327,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					$PODS_CONFIGURATION_BUILD_DIR,
+					"$PODS_CONFIGURATION_BUILD_DIR",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -352,7 +350,6 @@
 					"-l\"MKAdditions\"",
 					"-l\"MSWeakTimer\"",
 					"-l\"Mantle\"",
-					"-l\"NTFeedBack\"",
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",
@@ -429,7 +426,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					$PODS_CONFIGURATION_BUILD_DIR,
+					"$PODS_CONFIGURATION_BUILD_DIR",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -451,7 +448,6 @@
 					"-l\"MKAdditions\"",
 					"-l\"MSWeakTimer\"",
 					"-l\"Mantle\"",
-					"-l\"NTFeedBack\"",
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",
