@@ -86,16 +86,12 @@ EOM
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/ECLaunch/ECLaunch.bundle"
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/MKAdditions/MKAdditions.bundle"
-  install_resource "${PODS_ROOT}/NTFeedBack/NTFeedBack/model/FBMessages.xcdatamodeld"
-  install_resource "${PODS_ROOT}/NTFeedBack/NTFeedBack/feedback.bundle"
   install_resource "${PODS_ROOT}/PBJVision/Source/Shaders/Shader.fsh"
   install_resource "${PODS_ROOT}/PBJVision/Source/Shaders/Shader.vsh"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/ECLaunch/ECLaunch.bundle"
   install_resource "$PODS_CONFIGURATION_BUILD_DIR/MKAdditions/MKAdditions.bundle"
-  install_resource "${PODS_ROOT}/NTFeedBack/NTFeedBack/model/FBMessages.xcdatamodeld"
-  install_resource "${PODS_ROOT}/NTFeedBack/NTFeedBack/feedback.bundle"
   install_resource "${PODS_ROOT}/PBJVision/Source/Shaders/Shader.fsh"
   install_resource "${PODS_ROOT}/PBJVision/Source/Shaders/Shader.vsh"
 fi
