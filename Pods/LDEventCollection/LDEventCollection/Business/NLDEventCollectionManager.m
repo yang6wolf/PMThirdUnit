@@ -21,6 +21,7 @@
 #import "NLDRemoteEventManager.h"
 #import "NLDRNPageManager.h"
 #import "NLDRemotePageService.h"
+#import "NLDCollectionManagerConfigure.h"
 
 NLDNotificationNameDefine(NLDNotificationABTest)
 
@@ -52,6 +53,12 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
     if (self) {
     }
     return self;
+}
+
+- (void)configManagerWithConfigure:(NLDCollectionManagerConfigure *)configure
+{
+    self.configure = configure;
+    [self setAppKey:configure.appKey deviceId:configure.deviceId channel:configure.channel eventDomain:configure.eventUploadDomain imageDomain:configure.imageUploadDomain];
 }
 
 - (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel
@@ -101,6 +108,9 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
     // 程序进入后台时，将数据保存至本地，并上传
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDataOnBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
+    // 每次启动时，检测用户是否开启了推送权限
+    [self checkPushNotificationPermission];
+    
     // DEBUG 时自动向后台请求页面配置
 #if DEBUG
     [[NLDRemotePageService defaultService] setAppKey:appKey];
@@ -125,6 +135,26 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
         return;
     }
     [_eventCollector addEventName:eventName withParams:params];
+}
+
+// 检测用户是否开启推送权限
+- (void)checkPushNotificationPermission
+{
+    BOOL isOpen = NO;
+    BOOL isIOS8 = [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0;
+    if (isIOS8) {
+        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
+        if (setting.types != UIUserNotificationTypeNone) {
+            isOpen = YES;
+        }
+    } else {
+        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
+        if (type != UIRemoteNotificationTypeNone) {
+            isOpen = YES;
+        }
+    }
+    // 上报事件
+    [self addEventName:@"PushPermissionEvent" withParams:@{@"isOpen":(isOpen ? @"1":@"0")}];
 }
 
 - (void)setupUncaughtExceptionHandler

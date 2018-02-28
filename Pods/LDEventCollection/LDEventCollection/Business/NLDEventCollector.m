@@ -35,11 +35,14 @@
 #import "NLDAppInfoUtils.h"
 #import "UIViewController+NLDInternalMethod.h"
 #import "NLDRemotePageService.h"
+#import "NLDCollectionManagerConfigure.h"
+#import <WebKit/WebKit.h>
 
 @interface NLDEventCollector ()
 @property (nonatomic, copy, nonnull) NSString *sessionId;
 @property (nonatomic, copy, nonnull) NSString *appKey;
 @property (nonatomic, copy, nonnull) NSString *deviceId;
+@property (nonatomic, strong) WKWebView *webView;
 @end
 
 @implementation NLDEventCollector
@@ -70,15 +73,30 @@
         NSString *timeStamp = [NSString stringWithFormat:@"%.0f", [[NSDate date] timeIntervalSince1970] * 1000];
         _sessionId = [[NSString stringWithFormat:@"%@_%@", self.deviceId, timeStamp] NLD_md5String];
         
-        [self handleAppDidStart];
-        
         // 设置webView的UserAgent
+        [self configWebViewUserAgent];
+    
+        [self handleAppDidStart];
+    }
+    return self;
+}
+
+- (void)configWebViewUserAgent
+{
+    NLDCollectionManagerConfigure *configure = [NLDEventCollectionManager sharedManager].configure;
+    if (configure && configure.isWKWebView) {
+        self.webView = [[WKWebView alloc] initWithFrame:CGRectZero];
+        [self.webView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+            NSString *originalUserAgent = [[NSUserDefaults standardUserDefaults] objectForKey:@"UserAgent"] ?: result;
+            NSString *newUserAgent = [NSString stringWithFormat:@"%@ LsessionId/%@ LdeviceId/%@", originalUserAgent, _sessionId, _deviceId];
+            [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent":newUserAgent}];
+        }];
+    } else {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         NSString *originalUserAgent = [webView stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
         NSString *newUserAgent = [NSString stringWithFormat:@"%@ LsessionId/%@ LdeviceId/%@", originalUserAgent, _sessionId, _deviceId];
         [[NSUserDefaults standardUserDefaults] registerDefaults:@{@"UserAgent": newUserAgent}];
     }
-    return self;
 }
 
 - (void)dealloc

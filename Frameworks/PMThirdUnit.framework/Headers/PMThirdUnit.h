@@ -35,6 +35,7 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "LDMediator.h"
 #import "KeychainWrapper.h"
 #import "NLDEventCollectionManager.h"
+#import "NLDCollectionManagerConfigure.h"
 #import "UIAlertView+MKBlockAdditions.h"
 #import "LDRemoteCommandConfig.h"
 #import "LDSocketPushClientRemoteCommandCenter.h"

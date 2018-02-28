@@ -10,6 +10,8 @@
 #import <UIKit/UIKit.h>
 #import "NLDMethodHookNotification.h"
 
+@class NLDCollectionManagerConfigure;
+
 NS_ASSUME_NONNULL_BEGIN
 
 extern NSString * const NLDNotificationABTest;
@@ -21,10 +23,18 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
 
 @property (nonatomic, strong) userInfoBlock infoBlock;
 @property (nonatomic, strong) logInfoBlock  logInfoBlock;
+@property (nonatomic, strong) NLDCollectionManagerConfigure *configure;
+
 /**
  *  获取单例，如果未设置appKey和deviceId则返回nil
  */
 + (instancetype)sharedManager;
+
+/**
+ *  根据configure实例来配置eventCollectionManager。
+ *  @param  configure  配置了相关属性的实例，其属性包含3个必填项：appKey、deviceId、channel。
+ */
+- (void)configManagerWithConfigure:(NLDCollectionManagerConfigure *)configure;
 
 /**
  *  设置AppKey和DeviceId并开始记录和上传event。
@@ -34,7 +44,7 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
  *  @param  deviceId    可以是idfa或者其他device标识
  *  @param  channel     渠道号, 注意：请在客户端从后台获取到精确的channel后再执行初始化，否则会影响后台统计的精确性
  */
-- (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel;
+- (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel DEPRECATED_MSG_ATTRIBUTE("use configManagerWithConfigure:");
 
 /**
  *  设置AppKey和DeviceId并开始记录和上传event。
@@ -46,7 +56,7 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
  *  @param  eventUploadDomain     事件上报域名, 如果为nil，则使用默认值：http://adc.163.com/
  *  @param  imageUploadDomain     页面截图上报域名, 如果为nil，则使用默认值：http://data.ms.netease.com/
  */
-- (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel eventDomain:(nullable NSString *)eventUploadDomain imageDomain:(nullable NSString *)imageUploadDomain;
+- (void)setAppKey:(nonnull NSString *)appKey deviceId:(nonnull NSString *)deviceId channel:(nonnull NSString *)channel eventDomain:(nullable NSString *)eventUploadDomain imageDomain:(nullable NSString *)imageUploadDomain DEPRECATED_MSG_ATTRIBUTE("use configManagerWithConfigure:");
 
 /**
  *  设置一个用于检测用户手机是否安装了这些应用 (注意：需要将这些待检测的app添加到白名单中，否则检测结果不准确）
@@ -73,6 +83,12 @@ typedef void(^logInfoBlock)(NSDictionary *userInfo);
  *  @param  isEnable  默认为NO，如果设为YES，需要在项目的info.plist中设置NSLocationWhenInUseUsageDescription，否则无法获取权限。
  */
 - (void)setEnableLocationUpload:(BOOL)isEnable;
+
+/**
+ *  触发SDK立即进行定位并上报位置
+ *  需要先通过 setEnableLocationUpload: 开启SDK的定位功能，否则不做任何处理
+ */
+- (void)uploadCurrentLoacation;
 
 /**
  *  设置作为页面的子VC，由用研人员指定哪些子VC当做独立页面
