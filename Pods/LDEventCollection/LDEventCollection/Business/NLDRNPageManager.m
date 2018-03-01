@@ -15,6 +15,13 @@
 #import "NLDImageUploader.h"
 #import "NLDRemotePageService.h"
 
+#define dispatch_main_async_safe(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+
 @interface NLDRNPageManager ()
 
 // 记录上次传递来的 component，默认为nil
@@ -73,29 +80,25 @@
         return;
     }
     
-    if (!self.lastComponentName) {
-        self.lastComponentName = imageName;
-        return;
-    }
-    
-    // 1.如果未开启自动上传，则先判断是否已经上传
-    if (![NLDImageUploader sharedUploader].isEnableUpload) {
-        if ([[NLDRemotePageService defaultService] isAlreadyUploadPage:_lastComponentName]) {
+    dispatch_main_async_safe(^{
+        if (!self.lastComponentName) {
+            self.lastComponentName = imageName;
             return;
         }
-    }
-    
-    // 获取截图并上传
-    __block UIImage *screenImage = nil;
-    if (![NSThread isMainThread]) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            screenImage = [UIViewController screenShotForWindow:[UIApplication sharedApplication].keyWindow];
-        });
-    }
-    if (screenImage) {
-        [[NLDImageUploader sharedUploader] uploadImage:screenImage fileName:_lastComponentName type:NLDAutoScreenshot];
-        _lastComponentName = imageName;
-    }
+        
+        // 如果未开启自动上传，则先判断是否已经上传
+        if (![NLDImageUploader sharedUploader].isEnableUpload) {
+            if ([[NLDRemotePageService defaultService] isAlreadyUploadPage:_lastComponentName]) {
+                return;
+            }
+        }
+        
+        UIImage *screenImage = [UIViewController screenShotForWindow:[UIApplication sharedApplication].keyWindow];
+        if (screenImage) {
+            [[NLDImageUploader sharedUploader] uploadImage:screenImage fileName:_lastComponentName type:NLDAutoScreenshot];
+            _lastComponentName = imageName;
+        }
+    });
 }
 
 @end

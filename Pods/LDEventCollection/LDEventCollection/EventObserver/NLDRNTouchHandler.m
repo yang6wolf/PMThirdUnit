@@ -50,29 +50,31 @@ NSString *const RNViewClickEventName = @"NLDNotificationTapGesture";
             UIView *responseView = viewRegistry[reactTag];
             if (!responseView) return;
             
-            [userInfo NLD_setViewOrNil:responseView];
-            
-            UIViewController *currentVC = [UIViewController currentVCOfIncludingChild:NO];
-            NSString *pageName = [currentVC RN_pageName];
-            [userInfo setObject:pageName forKey:@"controller"];
-            
-            NSMutableDictionary *additionalDict = [NSMutableDictionary dictionaryWithCapacity:2];
-            NSDictionary *relativeInfo = [[NLDRemoteEventManager sharedManager] tryToCollectDataWithCurrentView:responseView eventName:RNViewClickEventName];
-            if (relativeInfo) {
-                [additionalDict addEntriesFromDictionary:relativeInfo];
-            }
-            if ([receiver additionalData]) {
-                [additionalDict addEntriesFromDictionary:[receiver additionalData]];
-            }
-            if (additionalDict.count > 0) {
-                [userInfo setValue:additionalDict forKey:@"addition"];
-            }
-            
-            if (collectManager.infoBlock) {
-                collectManager.infoBlock(userInfo, responseView);
-            } else {
-                [NSNotificationCenter NLD_postEventCollectionNotificationName:RNViewClickEventName object:nil userInfo:userInfo.copy];
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [userInfo NLD_setViewOrNil:responseView];
+                
+                UIViewController *currentVC = [UIViewController currentVCOfIncludingChild:NO];
+                NSString *pageName = [currentVC RN_pageName];
+                [userInfo setObject:pageName forKey:@"controller"];
+                
+                NSMutableDictionary *additionalDict = [NSMutableDictionary dictionaryWithCapacity:2];
+                NSDictionary *relativeInfo = [[NLDRemoteEventManager sharedManager] tryToCollectDataWithCurrentView:responseView eventName:RNViewClickEventName];
+                if (relativeInfo) {
+                    [additionalDict addEntriesFromDictionary:relativeInfo];
+                }
+                if ([receiver additionalData]) {
+                    [additionalDict addEntriesFromDictionary:[receiver additionalData]];
+                }
+                if (additionalDict.count > 0) {
+                    [userInfo setValue:additionalDict forKey:@"addition"];
+                }
+                
+                if (collectManager.infoBlock) {
+                    collectManager.infoBlock(userInfo, responseView);
+                } else {
+                    [NSNotificationCenter NLD_postEventCollectionNotificationName:RNViewClickEventName object:nil userInfo:userInfo.copy];
+                }
+            });
         }
     }];
 }

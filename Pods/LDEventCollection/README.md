@@ -189,6 +189,22 @@ iOS 8 and Later
 最好在viewDidLoad方法执行前设置好！！！
 
 ## Version
+* 0.4.2
+
+    * 增加检测与统计用户是否开启了推送权限；
+
+* 0.4.1
+
+    * 修复在 RN 中出现的 main thread only 的警告；
+
+* 0.4.0
+
+    * 支持对 WKWebView 的 UserAgent 的设置；
+
+* 0.3.4
+
+    * 修复线程安全问题；
+
 * 0.3.3
 
     * 修复在 RN 中出现的Crash；
