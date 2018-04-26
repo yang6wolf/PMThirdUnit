@@ -189,6 +189,14 @@ iOS 8 and Later
 最好在viewDidLoad方法执行前设置好！！！
 
 ## Version
+* 0.4.4
+
+    * 尝试修复 UIInputViewController 或 UIInputWindowController 执行 dealloc 偶尔Crash的问题。详见：https://fabric.io/netease3/ios/apps/com.lede.zww/issues?time=last-thirty-days&event_type=crash&subFilter=state&state=open&showAllBuilds=true；
+
+* 0.4.3
+
+    * 增加检测手机是否越狱、是否是模拟器以及当前的充电状态；
+
 * 0.4.2
 
     * 增加检测与统计用户是否开启了推送权限；

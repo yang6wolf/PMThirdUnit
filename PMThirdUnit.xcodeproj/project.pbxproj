@@ -164,14 +164,17 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PMThirdUnit/Pods-PMThirdUnit-resources.sh",
-				"$PODS_CONFIGURATION_BUILD_DIR/ECLaunch/ECLaunch.bundle",
-				"$PODS_CONFIGURATION_BUILD_DIR/MKAdditions/MKAdditions.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ECLaunch/ECLaunch.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MKAdditions/MKAdditions.bundle",
 				"${PODS_ROOT}/PBJVision/Source/Shaders/Shader.fsh",
 				"${PODS_ROOT}/PBJVision/Source/Shaders/Shader.vsh",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ECLaunch.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MKAdditions.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Shader.fsh",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Shader.vsh",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

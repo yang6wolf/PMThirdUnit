@@ -62,15 +62,20 @@ NLDNotificationNameDefine(NLDNotificationDismissController)
         
         LDECLog(@"监测到系统调用的方法：%@ ", NSStringFromSelector(sel));
         
-        NSMutableDictionary *userInfo = [NSMutableDictionary NLD_dictionary];
-        NSString *pageName = [receiver controllerName];
-        [userInfo setValue:pageName forKey:@"controller"];
-        if ([receiver respondsToSelector:@selector(NLD_addInfoForDestoryController)]) {
-            [userInfo setValue:[receiver NLD_addInfoForDestoryController] forKey:@"addition"];
+        NSArray *filterCls = @[@"UIInputWindowController",@"UIInputViewController"];
+        NSString *clsName = NSStringFromClass([receiver class]);
+        if (![filterCls containsObject:clsName]) {
+            
+            NSMutableDictionary *userInfo = [NSMutableDictionary NLD_dictionary];
+            NSString *pageName = [receiver controllerName];
+            [userInfo setValue:pageName forKey:@"controller"];
+            if ([receiver respondsToSelector:@selector(NLD_addInfoForDestoryController)]) {
+                [userInfo setValue:[receiver NLD_addInfoForDestoryController] forKey:@"addition"];
+            }
+            [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationDestoryController object:nil userInfo:userInfo.copy];
+            
+            [NSNotificationCenter NLD_postMethodHookNotificationName:kNLDDeallocNotification userInfo:@{@"pageName": pageName}];
         }
-        [NSNotificationCenter NLD_postEventCollectionNotificationName:NLDNotificationDestoryController object:nil userInfo:userInfo.copy];
-        
-        [NSNotificationCenter NLD_postMethodHookNotificationName:kNLDDeallocNotification userInfo:@{@"pageName": pageName}];
         
         if ([receiver respondsToSelector:newSel]) {
             if (![receiver invokeSelector:newSel withArguments:nil]) {

@@ -28,7 +28,7 @@ PODS:
   - JSONKit-NoWarning (1.2)
   - KeychainWrapper (0.1.2)
   - KVOController (1.2.0)
-  - LDEventCollection (0.4.2):
+  - LDEventCollection (0.4.4):
     - LDPositioning
     - ProtocolBuffers
   - LDGeminiSDK (1.0.1)
@@ -69,7 +69,7 @@ DEPENDENCIES:
   - JSONKit-NoWarning (~> 1.2)
   - KeychainWrapper (~> 0.1.1)
   - KVOController
-  - LDEventCollection (~> 0.4.2)
+  - LDEventCollection (~> 0.4.4)
   - LDGeminiSDK (~> 1.0.1)
   - LDMediator (~> 0.1.0)
   - LDNetDiagnoService (~> 1.2.7)
@@ -84,6 +84,35 @@ DEPENDENCIES:
   - ReactiveCocoa (~> 2.4.7)
   - Realm (= 2.8.1)
 
+SPEC REPOS:
+  https://git.ms.netease.com/commonlibraryios/podspec.git:
+    - LDEventCollection
+    - LDGeminiSDK
+    - LDNetDiagnoService
+    - LDPositioning
+    - LDRemoteCommand
+  https://git.ms.netease.com/neteaselottery/ldcpspecs.git:
+    - CPFoundationCategory
+    - KeychainWrapper
+    - LDMediator
+    - LDRoutes
+    - MKAdditions
+  https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
+    - CocoaAsyncSocket
+    - ECLaunch
+    - JLRoutes
+    - JSONKit-NoWarning
+    - KVOController
+    - libqrencode
+    - Mantle
+    - MSWeakTimer
+    - PBJVision
+    - ProtocolBuffers
+    - Reachability
+    - ReactiveCocoa
+    - Realm
+
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   CocoaAsyncSocket: a18c75dca4b08723628a0bacca6e94803d90be91
@@ -93,7 +122,7 @@ SPEC CHECKSUMS:
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   KeychainWrapper: 2451abbc8ee4c8a0c7f13e4bf1c21879dc711794
   KVOController: d72ace34afea42468329623b3379ab3cd1d286b6
-  LDEventCollection: 1c02f011d77c2ab4391f6d1ee9547d73c474024c
+  LDEventCollection: 64b6a1366319683b856d2875f07b3efd8de58768
   LDGeminiSDK: 49ed632d26da4f234489ff9d332da8f0a9d5e9c0
   LDMediator: 7453ad0afdec638a59a057804af9c6b644263e5a
   LDNetDiagnoService: ab4f646897d28fd195159441e226e89c61d06fa9
@@ -110,6 +139,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 2627602ad6818451f0cb8c2a6e072f7f10a5f360
 
-PODFILE CHECKSUM: da715abd1d12d6a4b9e0aae8372a8cffb9582d4d
+PODFILE CHECKSUM: 6b3b090cfc20e8d2f41e291efb6f7861b2d9a827
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0

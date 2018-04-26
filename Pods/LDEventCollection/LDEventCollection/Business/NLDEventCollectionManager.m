@@ -22,6 +22,7 @@
 #import "NLDRNPageManager.h"
 #import "NLDRemotePageService.h"
 #import "NLDCollectionManagerConfigure.h"
+#import "NLDOtherCustomEvent.h"
 
 NLDNotificationNameDefine(NLDNotificationABTest)
 
@@ -109,7 +110,13 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDataOnBackground) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
     // 每次启动时，检测用户是否开启了推送权限
-    [self checkPushNotificationPermission];
+    [NLDOtherCustomEvent checkPushNotificationPermission];
+    // 检测手机是否越狱
+    [NLDOtherCustomEvent checkJailBreak];
+    // 检测手机是否模拟器
+    [NLDOtherCustomEvent checkIsSimulator];
+    // 检测手机当前的充电状态
+    [NLDOtherCustomEvent checkBatteryState];
     
     // DEBUG 时自动向后台请求页面配置
 #if DEBUG
@@ -135,26 +142,6 @@ NSTimeInterval NLDUploaderTimeInterval = 30;
         return;
     }
     [_eventCollector addEventName:eventName withParams:params];
-}
-
-// 检测用户是否开启推送权限
-- (void)checkPushNotificationPermission
-{
-    BOOL isOpen = NO;
-    BOOL isIOS8 = [[[UIDevice currentDevice] systemVersion] doubleValue] >= 8.0;
-    if (isIOS8) {
-        UIUserNotificationSettings *setting = [[UIApplication sharedApplication] currentUserNotificationSettings];
-        if (setting.types != UIUserNotificationTypeNone) {
-            isOpen = YES;
-        }
-    } else {
-        UIRemoteNotificationType type = [[UIApplication sharedApplication] enabledRemoteNotificationTypes];
-        if (type != UIRemoteNotificationTypeNone) {
-            isOpen = YES;
-        }
-    }
-    // 上报事件
-    [self addEventName:@"PushPermissionEvent" withParams:@{@"isOpen":(isOpen ? @"1":@"0")}];
 }
 
 - (void)setupUncaughtExceptionHandler
