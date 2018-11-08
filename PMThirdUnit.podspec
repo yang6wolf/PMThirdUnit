@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "PMThirdUnit"
-  s.version      = "4.8.2"
+  s.version      = "5.0.0"
   s.summary      = "贵金属项目所使用的第三方组件(非UI部分)"
   s.homepage     = "https://git.ms.netease.com/preciousmetals/PMThirdUnit"
   s.license      = { :type => 'MIT', :file => 'LICENSE'}
