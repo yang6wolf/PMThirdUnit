@@ -24,7 +24,7 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "Reachability.h"
 #import "PBJVision.h"
 #import "KVOController.h"
-
+#import "EXTScope.h"
 
 #import "KeychainWrapper.h"
 #import "JLRoutes.h"
