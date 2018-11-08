@@ -13,7 +13,6 @@ target 'PMThirdUnit' do
   pod 'Realm', '2.8.1'
   pod 'ECLaunch', '~> 0.1.0'
   pod 'Reachability', '~>3.2', :inhibit_warnings => true
-  pod 'ReactiveCocoa', '~> 2.4.7'
   pod 'PBJVision', '0.4.0' #版本号不要改动
   pod 'KVOController'
 

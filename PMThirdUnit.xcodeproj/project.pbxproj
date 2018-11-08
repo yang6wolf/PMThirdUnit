@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0801730B21941DA4003BADA1 /* EXTScope.h in Headers */ = {isa = PBXBuildFile; fileRef = 0801730921941DA3003BADA1 /* EXTScope.h */; };
+		0801730C21941DA4003BADA1 /* metamacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0801730A21941DA3003BADA1 /* metamacros.h */; };
 		2B84BBFB1E8F9AFC00B24819 /* PMThirdUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */; };
 		2BBB96511E8CD86700BFBD7A /* PMThirdUnit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		74E67458E435DF766DA8141B /* libPods-PMThirdUnit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B068CB4FBEB2E2E6EE9C14B7 /* libPods-PMThirdUnit.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0801730921941DA3003BADA1 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
+		0801730A21941DA3003BADA1 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
 		2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMThirdUnit.m; sourceTree = "<group>"; };
 		2BBB964C1E8CD86700BFBD7A /* PMThirdUnit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PMThirdUnit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PMThirdUnit.h; sourceTree = "<group>"; };
@@ -64,6 +68,8 @@
 		2BBB964E1E8CD86700BFBD7A /* PMThirdUnit */ = {
 			isa = PBXGroup;
 			children = (
+				0801730921941DA3003BADA1 /* EXTScope.h */,
+				0801730A21941DA3003BADA1 /* metamacros.h */,
 				2BBB964F1E8CD86700BFBD7A /* PMThirdUnit.h */,
 				2B84BBFA1E8F9AFC00B24819 /* PMThirdUnit.m */,
 				2BBB96501E8CD86700BFBD7A /* Info.plist */,
@@ -86,7 +92,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0801730C21941DA4003BADA1 /* metamacros.h in Headers */,
 				2BBB96511E8CD86700BFBD7A /* PMThirdUnit.h in Headers */,
+				0801730B21941DA4003BADA1 /* EXTScope.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,7 +363,6 @@
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",
-					"-l\"ReactiveCocoa\"",
 					"-l\"Realm\"",
 					"-l\"bz2.1.0\"",
 					"-l\"c++\"",
@@ -452,7 +459,6 @@
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",
-					"-l\"ReactiveCocoa\"",
 					"-l\"Realm\"",
 					"-l\"bz2.1.0\"",
 					"-l\"c++\"",

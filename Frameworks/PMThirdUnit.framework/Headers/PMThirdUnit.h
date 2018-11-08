@@ -22,7 +22,6 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "Realm.h"
 #import "ECLaunch.h"
 #import "Reachability.h"
-#import "ReactiveCocoa.h"
 #import "PBJVision.h"
 #import "KVOController.h"
 
