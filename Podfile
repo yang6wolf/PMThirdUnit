@@ -10,7 +10,6 @@ target 'PMThirdUnit' do
   pod 'AFNetworking', '~> 3.0'
   pod 'MSWeakTimer', '~> 1.1.0'
   pod 'JSONKit-NoWarning', '~> 1.2'
-  pod 'Mantle', '2.0.7'
   pod 'Realm', '2.8.1'
   pod 'ECLaunch', '~> 0.1.0'
   pod 'Reachability', '~>3.2', :inhibit_warnings => true

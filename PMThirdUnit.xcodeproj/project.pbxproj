@@ -330,7 +330,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$PODS_CONFIGURATION_BUILD_DIR",
+					$PODS_CONFIGURATION_BUILD_DIR,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -352,7 +352,6 @@
 					"-l\"LDRemoteCommand\"",
 					"-l\"MKAdditions\"",
 					"-l\"MSWeakTimer\"",
-					"-l\"Mantle\"",
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",
@@ -429,7 +428,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$PODS_CONFIGURATION_BUILD_DIR",
+					$PODS_CONFIGURATION_BUILD_DIR,
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -450,7 +449,6 @@
 					"-l\"LDRemoteCommand\"",
 					"-l\"MKAdditions\"",
 					"-l\"MSWeakTimer\"",
-					"-l\"Mantle\"",
 					"-l\"PBJVision\"",
 					"-l\"ProtocolBuffers\"",
 					"-l\"Reachability\"",

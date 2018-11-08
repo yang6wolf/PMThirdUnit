@@ -41,9 +41,6 @@ PODS:
   - LDRoutes (0.0.3):
     - JLRoutes (~> 1.5.1)
   - libqrencode (3.4.2)
-  - Mantle (2.0.7):
-    - Mantle/extobjc (= 2.0.7)
-  - Mantle/extobjc (2.0.7)
   - MKAdditions (0.1.1)
   - MSWeakTimer (1.1.0)
   - PBJVision (0.4.0)
@@ -76,7 +73,6 @@ DEPENDENCIES:
   - LDRemoteCommand (~> 0.0.5)
   - LDRoutes (~> 0.0.1)
   - libqrencode
-  - Mantle (= 2.0.7)
   - MKAdditions (= 0.1.1)
   - MSWeakTimer (~> 1.1.0)
   - PBJVision (= 0.4.0)
@@ -97,7 +93,7 @@ SPEC REPOS:
     - LDMediator
     - LDRoutes
     - MKAdditions
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - AFNetworking
     - CocoaAsyncSocket
     - ECLaunch
@@ -105,7 +101,6 @@ SPEC REPOS:
     - JSONKit-NoWarning
     - KVOController
     - libqrencode
-    - Mantle
     - MSWeakTimer
     - PBJVision
     - ProtocolBuffers
@@ -130,7 +125,6 @@ SPEC CHECKSUMS:
   LDRemoteCommand: aef240066d110aeff451a0a4b021ab0f2e59b1b0
   LDRoutes: 97066a1745d57d4a15032357cfe37d8df292dbc7
   libqrencode: 43dc34b89af83ea4b07c409cd8e09c87aa3a1c9f
-  Mantle: bc40bb061d8c2c6fb48d5083e04d928c3b7f73d9
   MKAdditions: 7c68a408ad6795e20eecd6920592002781e0ef61
   MSWeakTimer: 9426150f933b80ed3acf3f6d228e4b61f0e303c8
   PBJVision: aa3d9f584324e099898fb83977a815f0ecb7ba5a
@@ -139,6 +133,6 @@ SPEC CHECKSUMS:
   ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
   Realm: 2627602ad6818451f0cb8c2a6e072f7f10a5f360
 
-PODFILE CHECKSUM: 6b3b090cfc20e8d2f41e291efb6f7861b2d9a827
+PODFILE CHECKSUM: 929e9ac9a004f84cc8c193b8e7384789e4f0a304
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3

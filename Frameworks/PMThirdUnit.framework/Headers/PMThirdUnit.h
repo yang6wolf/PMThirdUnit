@@ -19,7 +19,6 @@ FOUNDATION_EXPORT const unsigned char PMThirdUnitVersionString[];
 #import "AFNetworking.h"
 #import "MSWeakTimer.h"
 #import "JSONKit.h"
-#import "Mantle.h"
 #import "Realm.h"
 #import "ECLaunch.h"
 #import "Reachability.h"
